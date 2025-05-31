@@ -1,20 +1,20 @@
-// src/pages/OrderHistoryPage.jsx
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Header from '../components/Header.jsx';
+import UserMenu from '../components/UserMenu.jsx';
 
-const orderHistory = [
-  { id: '1', title: '자료구조 완전정복', orderDate: '2025-05-01', quantity: 1, price: 15200, image: '/book1.jpg', semester: '25-1학기', status: '주문완료' },
-  { id: '2', title: '운영체제 이해하기', orderDate: '2025-05-01', quantity: 1, price: 16800, image: null, semester: '25-1학기', status: '대여중' },
-  { id: '3', title: '컴퓨터구조와 논리설계', orderDate: '2024-12-10', quantity: 1, price: 17000, image: null, semester: '25-2학기', status: '연체중' },
-  { id: '4', title: '알고리즘 문제해결 전략', orderDate: '2024-12-10', quantity: 1, price: 19000, image: null, semester: '25-2학기', status: '거래완료' },
-];
-
-export default function OrderHistoryPage() {
+export default function OrderHistoryPage({ isLoggedIn, setIsLoggedIn }) {
   const navigate = useNavigate();
   const [selectedSemester, setSelectedSemester] = useState('25-1학기');
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 2;
+
+  const orderHistory = [
+    { id: '1', title: '자료구조 완전정복', orderDate: '2025-05-01', quantity: 1, price: 15200, image: '/images/C++.jpg', semester: '25-1학기', status: '주문완료' },
+    { id: '2', title: '운영체제 이해하기', orderDate: '2025-05-01', quantity: 1, price: 16800, image: '/images/핵심미적분학.jpg', semester: '25-1학기', status: '대여중' },
+    { id: '3', title: '컴퓨터구조와 논리설계', orderDate: '2024-12-10', quantity: 1, price: 17000, image: null, semester: '25-2학기', status: '연체중' },
+    { id: '4', title: '알고리즘 문제해결 전략', orderDate: '2024-12-10', quantity: 1, price: 19000, image: null, semester: '25-2학기', status: '거래완료' },
+  ];
 
   const filteredOrders = orderHistory.filter(book => book.semester === selectedSemester);
   const totalPages = Math.ceil(filteredOrders.length / itemsPerPage);
@@ -23,8 +23,14 @@ export default function OrderHistoryPage() {
   const handlePageChange = (page) => setCurrentPage(page);
 
   return (
-    <div style={{ fontFamily: 'sans-serif', backgroundColor: '#fff' }}>
+    <div style={{ fontFamily: 'sans-serif', backgroundColor: '#fff', position: 'relative' }}>
       <Header />
+      <UserMenu
+        isLoggedIn={isLoggedIn}
+        setIsLoggedIn={setIsLoggedIn}
+        redirectOnLogout={false} // ✅ 로그아웃 후 현재 페이지 유지
+      />
+
       <div style={container}>
         <div style={filterWrapper}>
           {['25-1학기', '25-2학기'].map((semester) => (
@@ -38,7 +44,7 @@ export default function OrderHistoryPage() {
           ))}
         </div>
 
-        {paginatedBooks.map((book, idx) => (
+        {paginatedBooks.map((book) => (
           <div key={book.id} style={cardWrapper}>
             <div style={{
               ...statusBadge,
@@ -64,12 +70,10 @@ export default function OrderHistoryPage() {
                   <button style={actionButton} onClick={() => navigate('/refund')}>주문 취소</button>
                 )}
                 {(book.status === '대여중' || book.status === '연체중') && (
-                  <button style={actionButton} onClick={() => navigate(`/extend-rent/${book.id}`)}>대여 연장</button>
+                  <button style={actionButton} onClick={() => navigate(`/book/${book.id}/extend`)}>대여 연장</button>
                 )}
-                
-
                 {book.status === '거래완료' && (
-                  <button style={actionButton} onClick={() => navigate(`/re-rent/${book.id}`)}>다시 대여하기</button>
+                  <button style={actionButton} onClick={() => navigate(`/book/${book.id}/rerent`)}>다시 대여하기</button>
                 )}
               </div>
             </div>
@@ -92,44 +96,32 @@ export default function OrderHistoryPage() {
   );
 }
 
+// ✅ 스타일 객체들 정의 (기존과 동일)
 const container = {
   maxWidth: '1000px',
   margin: '0 auto',
   padding: '20px',
 };
 
-const getStatusColor = (status) => {
-  switch (status) {
-    case '주문완료': return '#fff3cd';
-    case '대여중': return '#cce5ff';
-    case '연체중': return '#f8d7da';
-    case '거래완료': return '#d4edda';
-    default: return '#eeeeee';
-  }
-};
-
 const filterWrapper = {
   display: 'flex',
   gap: '10px',
   marginTop: '-20px',
-  marginBottom: '30px'
+  marginBottom: '30px',
 };
 
 const filterButton = {
   backgroundColor: '#f0f0f0',
   border: '1px solid #ccc',
   borderRadius: '12px',
-  padding: '6px 12px', // ← 여기! 높이는 이 padding의 첫 번째 값(상하)을 조절하면 됨
-  fontWeight: 'bold'
+  padding: '6px 12px',
+  fontWeight: 'bold',
 };
-
-
-
 
 const filterButtonActive = {
   ...filterButton,
   backgroundColor: '#007bff',
-  color: 'white'
+  color: 'white',
 };
 
 const cardWrapper = {
@@ -137,71 +129,7 @@ const cardWrapper = {
   borderRadius: '10px',
   boxShadow: '0 2px 6px rgba(0,0,0,0.1)',
   marginBottom: '24px',
-  padding: '20px'
-};
-
-const cardContent = {
-  display: 'flex',
-  gap: '24px',
-  alignItems: 'stretch'
-};
-
-const bookImage = {
-  width: '130px',
-  height: '180px',
-  backgroundColor: '#007bff',
-  borderRadius: '8px',
-  flexShrink: 0,
-  overflow: 'hidden',
-  boxShadow: '0 2px 6px rgba(0,0,0,0.1)'
-};
-
-const bookInfo = {
-  flex: 1,
-  backgroundColor: '#e6e6e6',
-  padding: '16px',
-  borderRadius: '6px'
-};
-
-const buttonGroup = {
-  display: 'flex',
-  flexDirection: 'column',
-  justifyContent: 'space-between',
-  alignItems: 'stretch',
-  width: '110px',
-  gap: '12px'
-};
-
-const actionButton = {
-  flex: 1,
-  padding: '12px',
-  border: '1px solid #ccc',
-  borderRadius: '6px',
-  backgroundColor: '#f2f2f2',
-  cursor: 'pointer',
-  fontSize: '14px',
-  fontWeight: '500'
-};
-
-const paginationWrapper = {
-  display: 'flex',
-  justifyContent: 'center',
-  marginTop: '20px',
-  gap: '8px'
-};
-
-const pageButton = {
-  padding: '8px 14px',
-  border: '1px solid #ccc',
-  borderRadius: '6px',
-  backgroundColor: '#f0f0f0',
-  cursor: 'pointer'
-};
-
-const pageButtonActive = {
-  ...pageButton,
-  backgroundColor: '#007bff',
-  color: 'white'
+  padding: '20px',
 };
 
 const statusBadge = {
@@ -214,13 +142,77 @@ const statusBadge = {
   marginBottom: '10px',
 };
 
-const headerWrapper = {
+const getStatusColor = (status) => {
+  switch (status) {
+    case '주문완료': return '#fff3cd';
+    case '대여중': return '#cce5ff';
+    case '연체중': return '#f8d7da';
+    case '거래완료': return '#d4edda';
+    default: return '#eeeeee';
+  }
+};
+
+const cardContent = {
   display: 'flex',
-  justifyContent: 'start',
-  alignItems: 'center',
-  marginBottom: '24px',   // ⬅️ 검색창 아래 여백을 24px로
-  width: '1000px',
-  marginLeft: 'auto',
-  marginRight: 'auto',
-  gap: '40px'
+  gap: '24px',
+  alignItems: 'stretch',
+};
+
+const bookImage = {
+  width: '130px',
+  height: '180px',
+  backgroundColor: '#007bff',
+  borderRadius: '8px',
+  flexShrink: 0,
+  overflow: 'hidden',
+  boxShadow: '0 2px 6px rgba(0,0,0,0.1)',
+};
+
+const bookInfo = {
+  flex: 1,
+  backgroundColor: '#f2f2f2',      // 버튼 배경색과 통일
+  padding: '16px',
+  borderRadius: '6px',
+  border: '1px solid #ccc',        // ✅ 테두리 추가
+};
+
+const buttonGroup = {
+  display: 'flex',
+  flexDirection: 'column',
+  justifyContent: 'space-between',
+  alignItems: 'stretch',
+  width: '110px',
+  gap: '12px',
+};
+
+const actionButton = {
+  flex: 1,
+  padding: '12px',
+  border: '1px solid #ccc',
+  borderRadius: '6px',
+  backgroundColor: '#f2f2f2',
+  cursor: 'pointer',
+  fontSize: '14px',
+  fontWeight: '500',
+};
+
+const paginationWrapper = {
+  display: 'flex',
+  justifyContent: 'center',
+  marginTop: '20px',
+  gap: '8px',
+};
+
+const pageButton = {
+  padding: '8px 14px',
+  border: '1px solid #ccc',
+  borderRadius: '6px',
+  backgroundColor: '#f0f0f0',
+  cursor: 'pointer',
+};
+
+const pageButtonActive = {
+  ...pageButton,
+  backgroundColor: '#007bff',
+  color: 'white',
 };
