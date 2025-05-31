@@ -26,7 +26,8 @@ function App() {
         <Route path="/" element={<MainPage isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />} />
         <Route path="/login" element={<LoginPage setIsLoggedIn={setIsLoggedIn} />} />
         <Route path="/join" element={<SignupPage />} />
-        <Route path="/orders" element={<OrderHistoryPage />} />
+        {/* ✅ 로그인 상태 props 전달 추가 */}
+        <Route path="/orders" element={<OrderHistoryPage isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />} />
         <Route path="/refund" element={<RefundPage />} />
         <Route path="/book/:id" element={<BookDetailPage />} />
         <Route path="/book-detail/:id" element={<BookDetailMainPage />} />

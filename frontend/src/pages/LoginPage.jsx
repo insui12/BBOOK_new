@@ -8,6 +8,8 @@ function LoginPage({ setIsLoggedIn }) {
   const [message, setMessage] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [isStayLoggedIn, setIsStayLoggedIn] = useState(false);
+  const [isHovering, setIsHovering] = useState(false); // ✅ hover 상태
+
   const navigate = useNavigate();
 
   const handleLogin = async () => {
@@ -53,7 +55,7 @@ function LoginPage({ setIsLoggedIn }) {
           onClick={() => setIsStayLoggedIn(!isStayLoggedIn)}
         >
           {isStayLoggedIn
-            ? <FaCheckCircle style={{ marginRight: '6px', color: '#8cbcf9' }} />
+            ? <FaCheckCircle style={{ marginRight: '6px', color: '0084FF' }} />
             : <FaRegCircle style={{ marginRight: '6px', color: '#888' }} />}
           로그인 상태 유지
         </div>
@@ -61,13 +63,23 @@ function LoginPage({ setIsLoggedIn }) {
         {isLoading ? (
           <div style={loadingStyle}>로그인 중...</div>
         ) : (
-          <button type="submit" style={loginButtonStyle}>로그인</button>
+          <button
+            type="submit"
+            style={{
+              ...loginButtonStyle,
+              backgroundColor: isHovering ? '#007bff' : '#8cbcf9' // ✅ hover 효과
+            }}
+            onMouseEnter={() => setIsHovering(true)}
+            onMouseLeave={() => setIsHovering(false)}
+          >
+            로그인
+          </button>
         )}
 
         {message && <div style={feedbackStyle}>{message}</div>}
 
         <div style={linkStyle}>
-          비밀번호 찾기 &nbsp;|&nbsp; 아이디 찾기 &nbsp;|&nbsp;
+          아이디 찾기 &nbsp;|&nbsp; 비밀번호 찾기 &nbsp;|&nbsp;
           <span style={{ cursor: 'pointer' }} onClick={() => navigate('/join')}>회원가입</span>
         </div>
 
@@ -84,7 +96,7 @@ function LoginPage({ setIsLoggedIn }) {
   );
 }
 
-// 스타일 정의
+// ✅ 스타일 정의
 const wrapperStyle = {
   minHeight: '100vh',
   display: 'flex',
@@ -141,13 +153,13 @@ const stayLoggedInStyle = {
 const loginButtonStyle = {
   width: '100%',
   padding: '12px',
-  backgroundColor: '#8cbcf9',
   color: 'white',
   fontWeight: 'bold',
   border: 'none',
   borderRadius: '5px',
   fontSize: '15px',
-  cursor: 'pointer'
+  cursor: 'pointer',
+  transition: 'background-color 0.2s ease'
 };
 
 const feedbackStyle = {

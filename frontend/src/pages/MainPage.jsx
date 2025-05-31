@@ -1,6 +1,8 @@
+// src/pages/MainPage.jsx
 import React, { useState } from 'react';
 import { IoSearchSharp } from 'react-icons/io5';
 import { useNavigate } from 'react-router-dom';
+import UserMenu from '../components/UserMenu';
 
 const sampleBooks = [
   { id: 1, title: '씽크 파이썬', course: '파이썬 프로그래밍', professor: '양근석' },
@@ -53,30 +55,10 @@ export default function MainPage({ isLoggedIn, setIsLoggedIn }) {
     navigate(`/search?q=${encodeURIComponent(query)}`);
   };
 
-  const handleLogout = () => {
-    setIsLoggedIn(false);
-    navigate('/');
-  };
-
   return (
     <div style={styles.container}>
-      {/* 상단 유틸 메뉴 */}
-      <div style={styles.topRight}>
-        {isLoggedIn ? (
-          <>
-            <span style={styles.topButton} onClick={handleLogout}>로그아웃</span>
-            <span style={styles.topButton} onClick={() => navigate('/cart')}>장바구니</span>
-            <span style={styles.topButton} onClick={() => navigate('/orders')}>주문내역</span>
-            <span style={styles.topButton} onClick={() => alert('고객센터 연결 예정')}>고객센터</span>
-          </>
-        ) : (
-          <>
-            <span style={styles.topButton} onClick={() => navigate('/login')}>로그인</span>
-            <span style={styles.topButton} onClick={() => navigate('/join')}>회원가입</span>
-            <span style={styles.topButton} onClick={() => alert('고객센터 연결 예정')}>고객센터</span>
-          </>
-        )}
-      </div>
+      {/* 상단 유틸 메뉴 분리 */}
+      <UserMenu isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />
 
       <h1 style={styles.logo}>BBOOK</h1>
 
@@ -136,19 +118,6 @@ const styles = {
     fontFamily: "'Noto Sans KR', sans-serif",
     overflow: 'hidden',
     position: 'relative'
-  },
-  topRight: {
-    position: 'absolute',
-    top: '20px',
-    right: '30px',
-    display: 'flex',
-    gap: '20px',
-    fontSize: '14px',
-    color: '#333',
-  },
-  topButton: {
-    cursor: 'pointer',
-    fontWeight: '500',
   },
   logo: {
     fontSize: '50px',
