@@ -3,10 +3,10 @@ import { IoSearchSharp } from 'react-icons/io5';
 import { useNavigate } from 'react-router-dom';
 
 const sampleBooks = [
-  { id: 1, title: '씽크 파이썬', course: '파이썬 프로그래밍', professor: '김미희' },
-  { id: 2, title: '자료구조와 알고리즘', course: '자료구조', professor: '김숙연' },
+  { id: 1, title: '씽크 파이썬', course: '파이썬 프로그래밍', professor: '양근석' },
+  { id: 2, title: '자료구조와 알고리즘', course: '자료구조', professor: '양근석' },
   { id: 3, title: '컴퓨터 네트워크', course: '네트워크', professor: '양근석' },
-  { id: 4, title: '인공지능 개론', course: 'AI입문', professor: '안재근' },
+  { id: 4, title: '인공지능 개론', course: 'AI입문', professor: '양근석' },
 ];
 
 function highlightMatch(text, query) {
