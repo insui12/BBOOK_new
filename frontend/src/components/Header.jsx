@@ -1,5 +1,6 @@
 // src/components/Header.jsx
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const headerWrapper = {
   display: 'flex',
@@ -16,7 +17,8 @@ const logoStyle = {
   fontSize: '60px',
   fontWeight: 'bold',
   color: '#007bff',
-  marginTop: '-8px'
+  marginTop: '-8px',
+  cursor: 'pointer'  // 클릭 가능하게 설정
 };
 
 const searchWrapper = {
@@ -46,13 +48,15 @@ const searchIcon = {
 };
 
 export default function Header() {
+  const navigate = useNavigate(); // 추가
+
   return (
     <div style={headerWrapper}>
-      <div style={logoStyle}>BBOOK</div>
+      <div style={logoStyle} onClick={() => navigate('/')}>BBOOK</div>
       <div style={searchWrapper}>
         <input
           type="text"
-          placeholder="책 제목 / 과목명 / 학과 검색"
+          placeholder="책 제목 / 수업명 / 교수명"
           style={searchInput}
         />
         <span style={searchIcon}>🔍</span>

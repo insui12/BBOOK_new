@@ -1,90 +1,76 @@
 import React, { useState } from 'react';
-import { FaRegCircle, FaTimes } from 'react-icons/fa';
+import { FaRegCircle, FaCheckCircle } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 
-function LoginPage() {
+function LoginPage({ setIsLoggedIn }) {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [message, setMessage] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+  const [isStayLoggedIn, setIsStayLoggedIn] = useState(false);
   const navigate = useNavigate();
 
   const handleLogin = async () => {
-    try {
-      const response = await fetch('http://localhost:8000/api/login/', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ username, password })
-      });
+    if (!username || !password) return;
 
-      const data = await response.json();
+    setIsLoading(true);
 
-      if (response.ok) {
-        setMessage(`✅ ${data.message}`);
-      } else {
-        setMessage(`❌ ${data.message}`);
-      }
-    } catch (error) {
-      setMessage('❌ 서버에 연결할 수 없습니다.');
-    }
+    // 🔧 임시 로그인 처리 (API 없이)
+    setTimeout(() => {
+      setIsLoggedIn(true);         // 로그인 상태 설정
+      setIsLoading(false);
+      navigate('/');               // 메인 페이지로 이동
+    }, 800);
   };
 
   return (
     <div style={wrapperStyle}>
-      
-      {/* BBOOK 로고 (클릭 시 메인으로 이동) */}
-      <h1 style={logoStyle} onClick={() => navigate('/')}>
-        BBOOK
-      </h1>
+      <h1 style={logoStyle} onClick={() => navigate('/')}>BBOOK</h1>
 
-      {/* 로그인 박스 */}
-      <div style={loginBoxStyle}>
-        
-        {/* 아이디 입력 */}
+      <form style={loginBoxStyle} onSubmit={(e) => { e.preventDefault(); handleLogin(); }}>
         <div style={inputWrapper}>
           <input
             type="text"
             placeholder="아이디"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
-            style={inputStyle}
+            style={inputFullStyle}
           />
-          <FaTimes style={clearIconStyle} />
         </div>
 
-        {/* 비밀번호 입력 */}
         <div style={inputWrapper}>
           <input
             type="password"
             placeholder="비밀번호"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            style={inputStyle}
+            style={inputFullStyle}
           />
-          <FaTimes style={clearIconStyle} />
         </div>
 
-        {/* 로그인 상태 유지 */}
-        <div style={stayLoggedInStyle}>
-          <FaRegCircle style={{ marginRight: '6px' }} />
+        <div
+          style={stayLoggedInStyle}
+          onClick={() => setIsStayLoggedIn(!isStayLoggedIn)}
+        >
+          {isStayLoggedIn
+            ? <FaCheckCircle style={{ marginRight: '6px', color: '#8cbcf9' }} />
+            : <FaRegCircle style={{ marginRight: '6px', color: '#888' }} />}
           로그인 상태 유지
         </div>
 
-        {/* 로그인 버튼 */}
-        <button onClick={handleLogin} style={loginButtonStyle}>
-          로그인
-        </button>
+        {isLoading ? (
+          <div style={loadingStyle}>로그인 중...</div>
+        ) : (
+          <button type="submit" style={loginButtonStyle}>로그인</button>
+        )}
 
-        {/* 로그인 결과 메시지 */}
-        {message && <div style={{ marginTop: '10px', textAlign: 'center', color: '#333' }}>{message}</div>}
+        {message && <div style={feedbackStyle}>{message}</div>}
 
-        {/* 하단 링크 */}
         <div style={linkStyle}>
-          비밀번호 찾기 &nbsp;|&nbsp; 아이디 찾기 &nbsp;|&nbsp; <span style={{ cursor: 'pointer' }} onClick={() => navigate('/join')}>회원가입</span>
+          비밀번호 찾기 &nbsp;|&nbsp; 아이디 찾기 &nbsp;|&nbsp;
+          <span style={{ cursor: 'pointer' }} onClick={() => navigate('/join')}>회원가입</span>
         </div>
 
-        {/* ✅ 카카오 로그인 이미지 */}
         <div style={{ textAlign: 'center', marginTop: '15px' }}>
           <img
             src="/kakaotalk.png"
@@ -93,36 +79,37 @@ function LoginPage() {
             onClick={() => alert('카카오 로그인 기능은 아직 구현되지 않았습니다.')}
           />
         </div>
-
-      </div>
+      </form>
     </div>
   );
 }
 
-// 💅 스타일 모음
+// 스타일 정의
 const wrapperStyle = {
   minHeight: '100vh',
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'center',
-  paddingTop: '80px',
+  paddingTop: '90px',
   backgroundColor: '#fff',
   fontFamily: "'Noto Sans KR', sans-serif"
 };
 
 const logoStyle = {
-  color: '#8cbcf9',
-  fontSize: '36px',
+  color: '#007bff',
+  fontSize: '50px',
   fontWeight: 'bold',
-  cursor: 'pointer'
+  cursor: 'pointer',
+  marginBottom: '10px'
 };
 
 const loginBoxStyle = {
   border: '1px solid #d1d5db',
   borderRadius: '10px',
   padding: '30px 40px',
-  marginTop: '40px',
-  width: '320px',
+  marginTop: '30px',
+  width: '90%',
+  maxWidth: '320px',
   boxShadow: '0 2px 4px rgba(0,0,0,0.05)',
   textAlign: 'left'
 };
@@ -132,23 +119,14 @@ const inputWrapper = {
   marginBottom: '15px'
 };
 
-const inputStyle = {
+const inputFullStyle = {
   width: '100%',
   padding: '12px',
   borderRadius: '5px',
   border: '1px solid #ccc',
   backgroundColor: '#e5e7eb',
-  fontSize: '14px'
-};
-
-const clearIconStyle = {
-  position: 'absolute',
-  right: '10px',
-  top: '50%',
-  transform: 'translateY(-50%)',
-  color: '#888',
-  fontSize: '12px',
-  cursor: 'pointer'
+  fontSize: '14px',
+  boxSizing: 'border-box'
 };
 
 const stayLoggedInStyle = {
@@ -156,7 +134,8 @@ const stayLoggedInStyle = {
   color: '#555',
   marginBottom: '15px',
   display: 'flex',
-  alignItems: 'center'
+  alignItems: 'center',
+  cursor: 'pointer'
 };
 
 const loginButtonStyle = {
@@ -169,6 +148,20 @@ const loginButtonStyle = {
   borderRadius: '5px',
   fontSize: '15px',
   cursor: 'pointer'
+};
+
+const feedbackStyle = {
+  marginTop: '10px',
+  textAlign: 'center',
+  fontSize: '14px',
+  color: '#e11d48'
+};
+
+const loadingStyle = {
+  textAlign: 'center',
+  fontSize: '14px',
+  color: '#555',
+  padding: '12px 0'
 };
 
 const linkStyle = {
