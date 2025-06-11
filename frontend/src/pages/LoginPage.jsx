@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { FaRegCircle, FaCheckCircle } from 'react-icons/fa';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom'; // ✅ 추가된 부분
 
 function LoginPage({ setIsLoggedIn }) {
   const [username, setUsername] = useState('');
@@ -8,9 +8,11 @@ function LoginPage({ setIsLoggedIn }) {
   const [message, setMessage] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [isStayLoggedIn, setIsStayLoggedIn] = useState(false);
-  const [isHovering, setIsHovering] = useState(false); // ✅ hover 상태
+  const [isHovering, setIsHovering] = useState(false);
 
   const navigate = useNavigate();
+  const location = useLocation(); // ✅ 현재 경로 정보
+  const from = location.state?.from || '/'; // ✅ 이전 경로가 없으면 기본값은 메인
 
   const handleLogin = async () => {
     if (!username || !password) return;
@@ -19,9 +21,9 @@ function LoginPage({ setIsLoggedIn }) {
 
     // 🔧 임시 로그인 처리 (API 없이)
     setTimeout(() => {
-      setIsLoggedIn(true);         // 로그인 상태 설정
+      setIsLoggedIn(true); // 로그인 상태 true
       setIsLoading(false);
-      navigate('/');               // 메인 페이지로 이동
+      navigate(from);      // ✅ 로그인 후 돌아갈 경로로 이동
     }, 800);
   };
 
@@ -67,7 +69,7 @@ function LoginPage({ setIsLoggedIn }) {
             type="submit"
             style={{
               ...loginButtonStyle,
-              backgroundColor: isHovering ? '#007bff' : '#8cbcf9' // ✅ hover 효과
+              backgroundColor: isHovering ? '#007bff' : '#8cbcf9'
             }}
             onMouseEnter={() => setIsHovering(true)}
             onMouseLeave={() => setIsHovering(false)}

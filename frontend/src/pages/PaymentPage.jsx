@@ -1,122 +1,97 @@
-import React, { useState } from 'react';
+// src/pages/PaymentPage.jsx
+import React from 'react';
 import Header from '../components/Header';
-import { useNavigate } from 'react-router-dom';
 
-export default function RefundPage() {
-  const [selectedReason, setSelectedReason] = useState('');
-  const [etcReason, setEtcReason] = useState('');
-  const [submitted, setSubmitted] = useState(false);
-  const navigate = useNavigate();
-
-  const handleSelect = (reason) => {
-    setSelectedReason(reason);
-    if (reason !== '기타') {
-      setEtcReason('');
-    }
+export default function PaymentPage() {
+  const book = {
+    id: '1',
+    title: '핵심 미적분학 - 제9판',
+    author: '최서진',
+    publisher: '북북출판',
+    price: 42000,
+    image: '/book1.jpg',
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (!selectedReason) {
-      alert('취소 사유를 선택해주세요.');
-      return;
-    }
-
-    if (selectedReason === '기타' && etcReason.trim() === '') {
-      alert('기타 사유를 입력해주세요.');
-      return;
-    }
-
-    const finalReason = selectedReason === '기타' ? etcReason : selectedReason;
-    console.log('취소 요청 사유:', finalReason);
-    setSubmitted(true);
-  };
-
-  const handleGoBack = () => {
-    navigate('/order-history');
-  };
+  if (!book) return <div style={{ padding: '40px' }}>책 정보를 불러올 수 없습니다.</div>;
 
   return (
-    <div style={{ fontFamily: 'sans-serif', backgroundColor: '#fff', padding: '20px' }}>
+    <div>
       <Header />
-      <div style={{ maxWidth: '600px', margin: '0 auto' }}>
-        <h1 style={{ fontSize: '24px', fontWeight: 'bold', marginBottom: '20px' }}>취소 요청</h1>
+      <div style={{ maxWidth: '1000px', margin: '40px auto', padding: '24px' }}>
+        <h2 style={{ fontSize: '24px', fontWeight: 'bold' }}>&lt; 결제(n)</h2>
 
-        {submitted ? (
-          <div style={{ fontSize: '18px', color: 'green' }}>
-            취소 요청이 완료되었습니다!
-            <button
-              onClick={handleGoBack}
-              style={{
-                marginTop: '20px',
-                padding: '10px 20px',
-                backgroundColor: '#007bff',
-                color: 'white',
-                border: 'none',
-                borderRadius: '6px',
-                cursor: 'pointer',
-                fontWeight: 'bold'
-              }}
-            >
-              주문 목록으로 돌아가기
-            </button>
-          </div>
-        ) : (
-          <form onSubmit={handleSubmit}>
-            <div style={{ marginBottom: '16px' }}>
-              <p style={{ marginBottom: '8px', fontWeight: 'bold' }}>취소 사유 선택</p>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-                {['단순 변심', '책 상태 불량', '배송 문제', '기타'].map((reason) => (
-                  <button
-                    key={reason}
-                    type="button"
-                    onClick={() => handleSelect(reason)}
-                    style={{
-                      padding: '10px',
-                      border: selectedReason === reason ? '2px solid #007bff' : '1px solid #ccc',
-                      borderRadius: '8px',
-                      backgroundColor: selectedReason === reason ? '#e6f2ff' : '#f9f9f9',
-                      cursor: 'pointer',
-                      textAlign: 'left'
-                    }}
-                  >
-                    {reason}
-                  </button>
-                ))}
+        {/* 진행 표시 */}
+        <div style={{ display: 'flex', borderBottom: '2px solid #ccc', marginBottom: '30px' }}>
+          <div style={{ flex: 1, textAlign: 'center', padding: '12px', backgroundColor: '#f0f0f0' }}>주문 결제</div>
+          <div style={{ flex: 1, textAlign: 'center', padding: '12px', backgroundColor: '#e0e0e0' }}>주문 완료</div>
+        </div>
+
+        {/* 상품 정보 */}
+        <div style={{ display: 'flex', gap: '20px' }}>
+          {/* 왼쪽 */}
+          <div style={{ flex: 2 }}>
+            <div style={{ backgroundColor: '#fff', borderRadius: '12px', padding: '20px', marginBottom: '20px', border: '1px solid #ccc' }}>
+              <h3 style={{ fontSize: '20px', fontWeight: 'bold', marginBottom: '16px' }}>교재명</h3>
+              <div style={{ display: 'flex', gap: '20px' }}>
+                <img src={book.image} alt={book.title} style={{ width: '120px', height: '160px', objectFit: 'cover', borderRadius: '8px' }} />
+                <div>
+                  <p style={{ fontWeight: 'bold', marginBottom: '8px' }}>『국내도서』 {book.title}</p>
+                  <p style={{ fontSize: '18px', color: '#333' }}>{book.price.toLocaleString()}원</p>
+                </div>
               </div>
             </div>
 
-            {selectedReason === '기타' && (
-              <div style={{ marginBottom: '16px' }}>
-                <label>
-                  기타 사유:
-                  <input
-                    type="text"
-                    value={etcReason}
-                    onChange={(e) => setEtcReason(e.target.value)}
-                    style={{ display: 'block', marginTop: '6px', padding: '8px', width: '100%', borderRadius: '6px', border: '1px solid #ccc' }}
-                  />
-                </label>
-              </div>
-            )}
+            {/* 결제 수단 */}
+            <div style={{ backgroundColor: '#fff', borderRadius: '12px', padding: '20px', marginBottom: '20px', border: '1px solid #ccc' }}>
+              <h3 style={{ fontSize: '20px', fontWeight: 'bold', marginBottom: '16px' }}>결제수단</h3>
+              <ul>
+                <li>무통장입금(가상계좌)</li>
+                <li>간편결제(카카오페이, 네이버페이, 토스)</li>
+                <li>신용/체크카드</li>
+              </ul>
+            </div>
 
-            <button
-              type="submit"
-              style={{
-                padding: '12px 24px',
-                backgroundColor: '#007bff',
-                color: 'white',
-                border: 'none',
-                borderRadius: '8px',
-                cursor: 'pointer',
-                fontWeight: 'bold'
-              }}
-            >
-              제출하기
+            {/* 거래 장소 */}
+            <div style={{ backgroundColor: '#fff', borderRadius: '12px', padding: '20px', border: '1px solid #ccc' }}>
+              <h3 style={{ fontSize: '20px', fontWeight: 'bold', marginBottom: '16px' }}>거래 장소</h3>
+              <img src="/map.png" alt="지도" style={{ width: '100%', height: '200px', objectFit: 'cover', borderRadius: '8px' }} />
+              <div style={{ marginTop: '12px' }}>
+                <strong>상세주소:</strong> 1공학관 1층
+              </div>
+            </div>
+          </div>
+
+          {/* 오른쪽 요약 */}
+          <div style={{ flex: 1, backgroundColor: '#fff', borderRadius: '12px', padding: '20px', border: '1px solid #ccc' }}>
+            <h3 style={{ fontSize: '20px', fontWeight: 'bold', marginBottom: '16px' }}>최종 결제 금액</h3>
+            <div style={summaryLine}>
+              <span>총 상품 가격</span>
+              <span>{book.price.toLocaleString()}원</span>
+            </div>
+            <div style={summaryTotal}>
+              <span>총 결제 금액</span>
+              <span style={{ fontWeight: 'bold', fontSize: '18px' }}>{book.price.toLocaleString()}원</span>
+            </div>
+            <button style={{ marginTop: '20px', width: '100%', padding: '12px', backgroundColor: '#007bff', color: '#fff', border: 'none', borderRadius: '8px', fontWeight: 'bold' }}>
+              주문하기 (1)
             </button>
-          </form>
-        )}
+          </div>
+        </div>
       </div>
     </div>
   );
 }
+
+const summaryLine = {
+  display: 'flex',
+  justifyContent: 'space-between',
+  marginBottom: '10px'
+};
+
+const summaryTotal = {
+  display: 'flex',
+  justifyContent: 'space-between',
+  marginTop: '20px',
+  paddingTop: '10px',
+  borderTop: '1px solid #ccc'
+};
