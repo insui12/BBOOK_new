@@ -4,12 +4,12 @@ import { useNavigate, useLocation } from 'react-router-dom';
 
 export default function UserMenu({ isLoggedIn, setIsLoggedIn, redirectOnLogout = true }) {
   const navigate = useNavigate();
-  const location = useLocation();
+  const location = useLocation(); // 현재 경로 확인용
 
   const handleLogout = () => {
     setIsLoggedIn(false);
     if (redirectOnLogout && location.pathname !== '/') {
-      navigate('/'); // 기본적으로는 메인으로 이동
+      navigate('/'); // 로그아웃 후 메인으로 이동 (옵션)
     }
   };
 
@@ -24,7 +24,12 @@ export default function UserMenu({ isLoggedIn, setIsLoggedIn, redirectOnLogout =
         </>
       ) : (
         <>
-          <span style={styles.topButton} onClick={() => navigate('/login')}>로그인</span>
+          <span
+            style={styles.topButton}
+            onClick={() => navigate('/login', { state: { from: location.pathname } })} // ✅ 현재 위치 전달
+          >
+            로그인
+          </span>
           <span style={styles.topButton} onClick={() => navigate('/join')}>회원가입</span>
           <span style={styles.topButton} onClick={() => alert('고객센터 연결 예정')}>고객센터</span>
         </>

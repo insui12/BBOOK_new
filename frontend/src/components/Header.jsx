@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { IoSearchSharp } from 'react-icons/io5'; // ✅ 돋보기 아이콘 import 추가
+import { IoSearchSharp } from 'react-icons/io5';
 
 const sampleBooks = [
   { id: 1, title: '씽크 파이썬', course: '파이썬 프로그래밍', professor: '양근석' },
@@ -13,7 +13,6 @@ function highlightMatch(text, query) {
   const lowerText = text.toLowerCase();
   const lowerQuery = query.toLowerCase();
   const matchIndex = lowerText.indexOf(lowerQuery);
-
   if (matchIndex === -1) return text;
 
   return (
@@ -43,11 +42,9 @@ export default function Header() {
       book.course.toLowerCase().includes(keyword) ||
       book.professor.toLowerCase().includes(keyword)
     );
-
     setResults(filtered);
   };
 
-  // ✅ query 상태에 따라 동적으로 스타일 생성
   const dynamicSearchWrapper = {
     display: 'flex',
     alignItems: 'center',
@@ -67,7 +64,6 @@ export default function Header() {
     <div style={headerWrapper}>
       <div style={logoStyle} onClick={() => navigate('/')}>BBOOK</div>
       <div style={{ position: 'relative', flex: 1, maxWidth: '800px' }}>
-        {/* 검색창 */}
         <div style={dynamicSearchWrapper}>
           <input
             type="text"
@@ -76,15 +72,31 @@ export default function Header() {
             onChange={(e) => handleQueryChange(e.target.value)}
             style={searchInput}
           />
-          <IoSearchSharp style={searchIcon} /> {/* ✅ 이모지 대신 아이콘 사용 */}
+          <IoSearchSharp
+            style={searchIcon}
+            onClick={() => {
+              if (query.trim()) {
+                navigate(`/search?q=${encodeURIComponent(query)}`);
+                setQuery('');
+                setResults([]);
+              }
+            }}
+          />
         </div>
 
-        {/* 자동완성 결과창 */}
         {query.trim() && (
           <div style={resultsBox}>
             {results.length > 0 ? (
               results.map((book) => (
-                <div key={book.id} style={resultItem}>
+                <div
+                  key={book.id}
+                  style={{ ...resultItem, cursor: 'pointer' }}
+                  onClick={() => {
+                    navigate(`/search?q=${encodeURIComponent(query)}`);
+                    setQuery('');
+                    setResults([]);
+                  }}
+                >
                   {highlightMatch(book.title, query)} | {highlightMatch(book.course, query)} | {highlightMatch(book.professor, query)}
                 </div>
               ))
@@ -98,7 +110,7 @@ export default function Header() {
   );
 }
 
-// ✅ 스타일 정의
+// 스타일
 const headerWrapper = {
   display: 'flex',
   justifyContent: 'start',
@@ -131,6 +143,7 @@ const searchIcon = {
   fontSize: '20px',
   color: '#007bff',
   marginLeft: '12px',
+  cursor: 'pointer', // ⬅️ 클릭 가능하게
 };
 
 const resultsBox = {
@@ -153,7 +166,6 @@ const resultsBox = {
 const resultItem = {
   padding: '10px 16px',
   fontSize: '14px',
-  cursor: 'default',
   color: '#111',
 };
 
