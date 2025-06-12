@@ -34,85 +34,99 @@ export default function SupportPage() {
       <Header />
       <div
         style={{
-          maxWidth: '920px',
+          maxWidth: '907px',
           margin: '40px auto',
-          backgroundColor: '#d6f0ff',
+          backgroundColor: '#fff',
           borderRadius: '12px',
           padding: '40px',
           boxShadow: '0 4px 12px rgba(0, 0, 0, 0.05)',
         }}
       >
-        <h2 style={{ fontSize: '24px', fontWeight: '800', marginBottom: '32px', color: '#222' }}>📌 자주 묻는 질문</h2>
+        <h2 style={{ fontSize: '22px', fontWeight: '800', marginBottom: '20px', color: '#222' }}>
+          자주 묻는 질문
+        </h2>
 
-        <div>
+        <div style={{ border: '1px solid #eee', borderRadius: '12px', overflow: 'hidden' }}>
           {faqs.map((faq, index) => (
             <div
               key={index}
               style={{
-                borderBottom: '1px solid #ccc',
-                padding: '16px 0',
+                borderBottom: index !== faqs.length - 1 ? '1px solid #eee' : 'none',
+                backgroundColor: '#fcfcfc',
+                padding: '16px 20px',
                 cursor: 'pointer',
+                transition: 'all 0.2s ease',
               }}
               onClick={() => handleToggle(index)}
             >
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                <strong style={{ fontSize: '16px', color: '#333' }}>{faq.question}</strong>
-                <span style={{ fontSize: '20px', color: '#999' }}>{openIndexes.includes(index) ? '▲' : '▼'}</span>
+                <strong style={{ fontSize: '16px', color: '#222' }}>
+                  {index + 1}. {faq.question}
+                </strong>
+                <span style={{ fontSize: '20px', color: '#999' }}>
+                  {openIndexes.includes(index) ? '▲' : '▼'}
+                </span>
               </div>
               {openIndexes.includes(index) && (
-  <div
-    style={{
-      backgroundColor: '#f8f9fa',
-      padding: '16px',
-      marginTop: '10px',
-      borderRadius: '8px',
-      border: '1px solid #ddd',
-      boxShadow: '0 2px 4px rgba(0,0,0,0.05)',
-    }}
-  >
-    <p style={{ margin: 0, color: '#333', lineHeight: '1.6' }}>{faq.answer}</p>
-  </div>
-)}
+                <div
+                  style={{
+                    backgroundColor: '#fff',
+                    padding: '16px 12px',
+                    marginTop: '10px',
+                    border: '1px solid #ddd',
+                    borderRadius: '8px',
+                    color: '#333',
+                    fontSize: '15px',
+                    lineHeight: '1.6',
+                  }}
+                >
+                  {faq.answer}
+                </div>
+              )}
             </div>
           ))}
         </div>
 
-        <div style={{ display: 'flex', justifyContent: 'flex-start', marginTop: '40px' }}>
-          <button
+        <div style={{ display: 'flex', justifyContent: 'space-around', marginTop: '60px' }}>
+          <div
             onClick={handleInquiryClick}
             style={{
-              backgroundColor: '#007bff',
-              color: '#fff',
-              padding: '14px 28px',
-              fontSize: '16px',
-              border: 'none',
-              borderRadius: '8px',
+              width: '45%',
+              border: '1px solid #ccc',
+              borderRadius: '12px',
+              padding: '20px',
+              textAlign: 'center',
               cursor: 'pointer',
-              fontWeight: '600',
+              backgroundColor: '#fff',
+              boxShadow: '0 2px 6px rgba(0,0,0,0.05)'
             }}
           >
-            📩 1:1 문의하기
-          </button>
-        </div>
+            <div style={{ fontSize: '28px', marginBottom: '8px' }}>📩</div>
+            <strong style={{ color: '#007bff', fontSize: '16px' }}>1:1 문의하기</strong>
+            <p style={{ fontSize: '13px', color: '#666', marginTop: '8px' }}>
+              서비스 이용 중 궁금한 점이나 도움이 필요하신가요?<br />
+              1:1 문의를 통해 직접 상담해드립니다.
+            </p>
+          </div>
 
-        <div style={{ borderTop: '1px solid #ccc', paddingTop: '30px', marginTop: '40px' }}>
-          <h2 style={{ fontSize: '24px', fontWeight: '800', marginBottom: '20px', color: '#222' }}>📦 취소/반품 신청</h2>
-          <div style={{ display: 'flex', justifyContent: 'flex-start' }}>
-            <button
-              onClick={handleRefundClick}
-              style={{
-                backgroundColor: '#007bff',
-                color: '#fff',
-                padding: '14px 28px',
-                fontSize: '16px',
-                border: 'none',
-                borderRadius: '8px',
-                cursor: 'pointer',
-                fontWeight: '600',
-              }}
-            >
-              📝 환불 신청하기
-            </button>
+          <div
+            onClick={handleRefundClick}
+            style={{
+              width: '45%',
+              border: '1px solid #ccc',
+              borderRadius: '12px',
+              padding: '20px',
+              textAlign: 'center',
+              cursor: 'pointer',
+              backgroundColor: '#fff',
+              boxShadow: '0 2px 6px rgba(0,0,0,0.05)'
+            }}
+          >
+            <div style={{ fontSize: '28px', marginBottom: '8px' }}>↩️</div>
+            <strong style={{ color: '#007bff', fontSize: '16px' }}>취소/반품신청</strong>
+            <p style={{ fontSize: '13px', color: '#666', marginTop: '8px' }}>
+              주문하신 상품의 반품 취소 신청<br />및 진행 상황을 확인하실 수 있습니다.
+            </p>
           </div>
         </div>
       </div>

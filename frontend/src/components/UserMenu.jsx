@@ -20,7 +20,7 @@ export default function UserMenu({ isLoggedIn, setIsLoggedIn, redirectOnLogout =
           <span style={styles.topButton} onClick={handleLogout}>로그아웃</span>
           <span style={styles.topButton} onClick={() => navigate('/cart')}>장바구니</span>
           <span style={styles.topButton} onClick={() => navigate('/orders')}>주문내역</span>
-          <span style={styles.topButton} onClick={() => alert('고객센터 연결 예정')}>고객센터</span>
+          <span style={styles.topButton} onClick={() => navigate('/support')}>고객센터</span>
         </>
       ) : (
         <>
@@ -31,7 +31,7 @@ export default function UserMenu({ isLoggedIn, setIsLoggedIn, redirectOnLogout =
             로그인
           </span>
           <span style={styles.topButton} onClick={() => navigate('/join')}>회원가입</span>
-          <span style={styles.topButton} onClick={() => alert('고객센터 연결 예정')}>고객센터</span>
+          <span style={styles.topButton} onClick={() => navigate('/support')}>고객센터</span>
         </>
       )}
     </div>
