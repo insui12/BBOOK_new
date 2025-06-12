@@ -27,94 +27,116 @@ export default function RefundPage() {
   };
 
   return (
-    <div style={{ fontFamily: 'sans-serif', backgroundColor: '#fff', padding: '20px' }}>
+    <div style={{ fontFamily: 'sans-serif', backgroundColor: '#f2f4f8', minHeight: '100vh' }}>
       <Header />
-      <div style={{ width: '1000px', margin: '0 auto' }}>
-        <h1 style={{ fontSize: '24px', fontWeight: 'bold', marginBottom: '20px' }}>취소 요청</h1>
+     <div
+  style={{
+    width: '90%',                   // 반응형 폭
+    maxWidth: '910px',              // 최대 폭 제한
+    margin: '40px auto',            // 가운데 정렬
+    transform: 'translateX(-5px)',  // 살짝 왼쪽 이동
+    transition: 'all 0.3s ease',    // 부드러운 애니메이션
+    background: '#fff',
+    borderRadius: '16px',
+    boxShadow: '0 4px 16px rgba(0,0,0,0.1)',
+    padding: '40px'
+  }}
+>
+
+        <h1 style={{ fontSize: '28px', fontWeight: 'bold', marginBottom: '30px', color: '#222' }}>📦 취소 요청</h1>
 
         {submitted ? (
-          <>
-            <div style={{ fontSize: '18px', color: 'green' }}>
-              취소 요청이 완료되었습니다!
+          <div style={{ textAlign: 'center' }}>
+            <div style={{ fontSize: '20px', color: '#28a745', fontWeight: 'bold' }}>
+              ✅ 취소 요청이 정상적으로 접수되었습니다!
             </div>
+            <p style={{ marginTop: '10px', color: '#555' }}>확인 후 처리 결과를 알려드릴게요.</p>
             <div style={{ marginTop: '40px' }}>
               <button
                 onClick={handleCancel}
                 style={{
-                  padding: '12px 24px',
+                  padding: '14px 28px',
                   backgroundColor: '#007bff',
                   color: 'white',
                   border: 'none',
-                  borderRadius: '6px',
+                  borderRadius: '10px',
                   cursor: 'pointer',
-                  fontWeight: 'bold'
+                  fontWeight: 'bold',
+                  fontSize: '16px',
+                  transition: 'all 0.2s',
                 }}
               >
                 주문 목록으로 돌아가기
               </button>
             </div>
-          </>
+          </div>
         ) : (
           <form onSubmit={handleSubmit}>
-            <div style={{ marginBottom: '16px' }}>
-              <p style={{ marginBottom: '8px', fontWeight: 'bold' }}>취소 사유 선택</p>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+            <div style={{ marginBottom: '24px' }}>
+              <p style={{ marginBottom: '12px', fontWeight: '600', fontSize: '18px' }}>🔍 취소 사유 선택</p>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
                 {['단순 변심', '책 상태 불량', '배송 문제', '기타'].map((reason) => (
-                  <button
+                  <div
                     key={reason}
-                    type="button"
                     onClick={() => handleSelect(reason)}
                     style={{
-                      padding: '10px',
+                      padding: '14px',
                       border: selectedReason === reason ? '2px solid #007bff' : '1px solid #ccc',
-                      borderRadius: '8px',
-                      backgroundColor: selectedReason === reason ? '#e6f2ff' : '#f9f9f9',
+                      borderRadius: '10px',
+                      backgroundColor: selectedReason === reason ? '#eaf4ff' : '#f9f9f9',
                       cursor: 'pointer',
-                      textAlign: 'left'
+                      fontSize: '16px',
+                      transition: 'all 0.2s',
+                      boxShadow: selectedReason === reason ? '0 2px 8px rgba(0,123,255,0.2)' : 'none'
                     }}
                   >
                     {reason}
-                  </button>
+                  </div>
                 ))}
               </div>
             </div>
 
             {selectedReason === '기타' && (
-              <div style={{ marginBottom: '16px' }}>
-                <label>
-                  기타 사유:
-                  <input
-                    type="text"
+              <div style={{ marginBottom: '24px' }}>
+                <label style={{ fontWeight: '500', fontSize: '16px' }}>
+                  ✏️ 기타 사유:
+                  <textarea
                     value={etcReason}
                     onChange={(e) => setEtcReason(e.target.value)}
+                    rows={4}
                     style={{
                       display: 'block',
-                      marginTop: '6px',
-                      padding: '8px',
-                      width: '980px',
-                      borderRadius: '6px',
-                      border: '1px solid #ccc'
+                      marginTop: '10px',
+                      padding: '12px',
+                      width: '100%',
+                      borderRadius: '10px',
+                      border: '1px solid #ccc',
+                      fontSize: '15px',
+                      lineHeight: '1.6',
+                      backgroundColor: '#fafafa',
+                      resize: 'none',
                     }}
                   />
                 </label>
               </div>
             )}
 
-            <div style={{ display: 'flex', gap: '10px' }}>
+            <div style={{ display: 'flex', justifyContent: 'flex-start', gap: '12px' }}>
               <button
                 type="button"
                 onClick={handleCancel}
                 style={{
                   padding: '12px 24px',
-                  backgroundColor: '#f9f9f9',
+                  backgroundColor: '#e0e0e0',
                   color: '#333',
-                  border: '1px solid #ccc',
-                  borderRadius: '8px',
+                  border: 'none',
+                  borderRadius: '10px',
                   cursor: 'pointer',
-                  fontWeight: 'bold'
+                  fontWeight: 'bold',
+                  fontSize: '15px',
                 }}
               >
-                취소
+                ❌ 취소
               </button>
 
               <button
@@ -124,12 +146,13 @@ export default function RefundPage() {
                   backgroundColor: '#007bff',
                   color: 'white',
                   border: 'none',
-                  borderRadius: '8px',
+                  borderRadius: '10px',
                   cursor: 'pointer',
-                  fontWeight: 'bold'
+                  fontWeight: 'bold',
+                  fontSize: '15px',
                 }}
               >
-                제출하기
+                📤 제출하기
               </button>
             </div>
           </form>
@@ -138,3 +161,4 @@ export default function RefundPage() {
     </div>
   );
 }
+

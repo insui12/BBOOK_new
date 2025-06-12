@@ -10,10 +10,10 @@ export default function OrderHistoryPage({ isLoggedIn, setIsLoggedIn }) {
   const itemsPerPage = 2;
 
   const orderHistory = [
-    { id: '1', title: '자료구조 완전정복', orderDate: '2025-05-01', quantity: 1, price: 15200, image: '/images/C++.jpg', semester: '25-1학기', status: '주문완료' },
-    { id: '2', title: '운영체제 이해하기', orderDate: '2025-05-01', quantity: 1, price: 16800, image: '/images/핵심미적분학.jpg', semester: '25-1학기', status: '대여중' },
-    { id: '3', title: '컴퓨터구조와 논리설계', orderDate: '2024-12-10', quantity: 1, price: 17000, image: null, semester: '25-2학기', status: '연체중' },
-    { id: '4', title: '알고리즘 문제해결 전략', orderDate: '2024-12-10', quantity: 1, price: 19000, image: null, semester: '25-2학기', status: '거래완료' },
+    { id: '1', title: 'C++ programing', orderDate: '2025-05-01', quantity: 1, price: 15200, image: '/images/C++.jpg', semester: '25-1학기', status: '주문완료' },
+    { id: '2', title: '핵심미적분학', orderDate: '2025-05-01', quantity: 1, price: 16800, image: '/images/핵심미적분학.jpg', semester: '25-1학기', status: '대여중' },
+    { id: '3', title: '융합 이산수학', orderDate: '2024-12-10', quantity: 1, price: 17000, image: '/images/융합 이산수학.jpg', semester: '25-2학기', status: '연체중' },
+    { id: '4', title: '선형대수학', orderDate: '2024-12-10', quantity: 1, price: 19000, image: '/images/선형대수학.jpg', semester: '25-2학기', status: '거래완료' },
   ];
 
   const filteredOrders = orderHistory.filter(book => book.semester === selectedSemester);
@@ -98,10 +98,17 @@ export default function OrderHistoryPage({ isLoggedIn, setIsLoggedIn }) {
 
 // ✅ 스타일 객체들 정의 (기존과 동일)
 const container = {
-  maxWidth: '1000px',
-  margin: '0 auto',
-  padding: '20px',
+  width: '100%',
+  maxWidth: '987px',
+  margin: '40px auto 0 auto',
+   transform: 'translateX(-5px)',
+  padding: '0', // 좌우 여백 없애고 검색창과 정확히 정렬
 };
+
+
+
+
+
 
 const filterWrapper = {
   display: 'flex',
@@ -156,7 +163,9 @@ const cardContent = {
   display: 'flex',
   gap: '24px',
   alignItems: 'stretch',
+   // ← 오른쪽에서 살짝 줄여줌
 };
+
 
 const bookImage = {
   width: '130px',
@@ -169,7 +178,7 @@ const bookImage = {
 };
 
 const bookInfo = {
-  flex: 1,
+  flex: 0.97,
   backgroundColor: '#f2f2f2',      // 버튼 배경색과 통일
   padding: '16px',
   borderRadius: '6px',
