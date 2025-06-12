@@ -21,8 +21,7 @@ const books = [
     overdueDays: 0,
     paymentMethod: '카카오페이',
     courses: [
-      { name: '미적분학 I', professor: '김민수' },
-      { name: '공학수학', professor: '이은정' }
+      { name: 'C++ 프로그래밍', professor: '안재근' },
     ]
   },
   {

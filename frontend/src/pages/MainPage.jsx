@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { IoSearchSharp } from 'react-icons/io5';
 import { useNavigate } from 'react-router-dom';
 import UserMenu from '../components/UserMenu';
+import logoImg from '../assets/logo.png'; // ✅ 로고 이미지 import 추가
 
 const sampleBooks = [
   { id: 1, title: '씽크 파이썬', course: '파이썬 프로그래밍', professor: '양근석' },
@@ -57,10 +58,11 @@ export default function MainPage({ isLoggedIn, setIsLoggedIn }) {
 
   return (
     <div style={styles.container}>
-      {/* 상단 유틸 메뉴 분리 */}
+      {/* 상단 유틸 메뉴 */}
       <UserMenu isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />
 
-      <h1 style={styles.logo}>BBOOK</h1>
+      {/* ✅ 텍스트 로고 → 이미지 로고로 변경 */}
+      <img src={logoImg} alt="BBOOK 로고" style={styles.logoImage} />
 
       <div style={styles.searchWrapper}>
         <div style={styles.inputBox}>
@@ -117,13 +119,13 @@ const styles = {
     paddingTop: '150px',
     fontFamily: "'Noto Sans KR', sans-serif",
     overflow: 'hidden',
-    position: 'relative'
+    position: 'relative',
   },
-  logo: {
-    fontSize: '50px',
-    color: '#007bff',
-    fontWeight: 'bold',
+  // ✅ 텍스트 로고 삭제 후 이미지 로고 스타일 추가
+  logoImage: {
+    height: '50px',
     marginBottom: '30px',
+    marginTop: '140px',
   },
   searchWrapper: {
     backgroundColor: '#eaf4ff',
@@ -162,7 +164,7 @@ const styles = {
   },
   icon: {
     fontSize: '20px',
-    color: '#007bff',
+    color: '#0094ff',
   },
   resultsBox: {
     overflowY: 'auto',
