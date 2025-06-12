@@ -71,6 +71,7 @@ export default function MainPage({ isLoggedIn, setIsLoggedIn }) {
       '김숙연': '/search/김숙연',
       '프로그래밍': '/search/프로그래밍',
       'C': '/search/C',
+      '핵심미적분학': '/book-detail/1',
     };
 
     if (hardcodedRoutes[query.trim()]) {

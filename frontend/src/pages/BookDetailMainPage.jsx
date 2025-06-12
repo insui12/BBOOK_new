@@ -12,7 +12,7 @@ const bookData = [
     publishDate: '2021-03-02',
     price: 40000,
     rentPrice: 4900,
-    image: '/images/핵심미적분학.jpg',
+    image: '/images/핵심미적분학.png',
     subject: '미적분학1',
     professor: '이윤진'
   }
