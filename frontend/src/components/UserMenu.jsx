@@ -42,13 +42,14 @@ const styles = {
   topRight: {
     position: 'absolute',
     top: '20px',
-    right: '30px',
+    right: '46px',
     display: 'flex',
     gap: '20px',
     fontSize: '14px',
     color: '#333',
   },
   topButton: {
+    marginTop: '16px',
     cursor: 'pointer',
     fontWeight: '500',
   },

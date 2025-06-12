@@ -6,46 +6,46 @@ import UserMenu from '../components/UserMenu.jsx';
 const searchData = [
   {
     id: '1',
-    title: 'C++ programming',
-    author: '황기태',
+    title: 'C언어로 쉽게 풀어쓴 자료구조',
+    author: '천인국,공용해,하상호',
     publisher: '생능출판',
-    publishDate: '2018년 3월',
-    course: 'C++ 프로그래밍 / 안재근',
-    condition: '최상',
-    image: '/images/C++.jpg',
+    publishDate: '2019년 2월',
+    course: '자료구조 / 김숙연',
+    condition: '중하',
+    image: '/images/자료구조.png',
     price: 5000,
   },
   {
     id: '2',
-    title: '모두의 인공지능 기초수학',
-    author: '서지영',
+    title: '리눅스 시스템 원리와 실제',
+    author: '창병모',
     publisher: '생능출판',
-    publishDate: '2020년 8월',
-    course: '인공지능 / 안재근',
-    condition: '좋음',
-    image: '/images/인공지능기초수학.png',
-    price: 5000,
+    publishDate: '2022년 1월',
+    course: '시스템 프로그래밍 / 김숙연',
+    condition: '상',
+    image: '/images/리눅스.png',
+    price: 5800,
   },
   {
     id: '3',
-    title: '명품 JAVA Programming',
-    author: '황기태, 김효수',
+    title: '쉽게 풀어쓴 C언어 Express',
+    author: '천인국',
     publisher: '생능출판',
-    publishDate: '2018년 6월',
-    course: 'JAVA웹 개발 / 안재근',
+    publishDate: '2023년 1월',
+    course: '프로그래밍 입문 / 김숙연',
     condition: '중하',
-    image: '/images/자바.png',
+    image: '/images/C언어.jpg',
     price: 5000,
   },
   {
     id: '4',
-    title: '인간관계론',
-    author: '김혜숙, 박선환, 박숙희, 정미경, 이주희',
-    publisher: '양서원',
-    publishDate: '2016년 3월',
-    course: '인간관계론 / 권재기',
+    title: 'Do it! 점프 투 파이썬',
+    author: '박응용',
+    publisher: '이지스퍼블리싱',
+    publishDate: '2023년 6월',
+    course: '컴퓨터공학입문과 파이썬 / 김숙연',
     condition: '상',
-    image: '/images/인간관계론.png',
+    image: '/images/파이썬.png',
     price: 5000,
   },
 ];
@@ -92,7 +92,7 @@ export default function SearchResultsPage({ isLoggedIn, setIsLoggedIn }) {
 
       <div style={{ width: '1000px', margin: '0 auto' }}>
         <h3 style={{ marginTop: '24px', fontSize: '22px' }}>
-          <strong style={{ color: '#007bff' }}>{query}안재근</strong>
+          <strong style={{ color: '#007bff' }}>{query}김숙연</strong>
           <span style={{ color: '#000' }}> 검색결과</span>
         </h3>
         <p style={{ marginTop: '8px' }}>

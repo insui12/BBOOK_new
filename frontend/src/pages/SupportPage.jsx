@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Header from '../components/Header.jsx';
+import UserMenu from '../components/UserMenu.jsx';
 
 const faqs = [
   { question: '반납은 어디서 하나요?', answer: '교내 북스테이션에 반납하시면 됩니다.' },
@@ -11,7 +12,7 @@ const faqs = [
   { question: '책이 마음에 안 들면 환불이 되나요?', answer: '사용 전 상태라면 환불이 가능합니다.' },
 ];
 
-export default function SupportPage() {
+export default function SupportPage({ isLoggedIn, setIsLoggedIn }) {
   const [openIndexes, setOpenIndexes] = useState([]);
   const navigate = useNavigate();
 
@@ -22,27 +23,38 @@ export default function SupportPage() {
   };
 
   const handleInquiryClick = () => {
-    navigate('/inquiry');
+    if (!isLoggedIn) {
+      navigate('/login', { state: { from: '/inquiry' } });
+    } else {
+      navigate('/inquiry');
+    }
   };
 
   const handleRefundClick = () => {
-    navigate('/refund', { state: { from: '/support' } });
+    if (!isLoggedIn) {
+      navigate('/login', { state: { from: '/refund' } });
+    } else {
+      navigate('/refund', { state: { from: '/support' } });
+    }
   };
 
   return (
     <div style={{ fontFamily: 'sans-serif', backgroundColor: '#fff', minHeight: '100vh' }}>
       <Header />
+      <UserMenu isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} redirectOnLogout={false} />
+
       <div
         style={{
           maxWidth: '907px',
-          margin: '40px auto',
+          margin: '20px auto',
           backgroundColor: '#fff',
           borderRadius: '12px',
           padding: '40px',
           boxShadow: '0 4px 12px rgba(0, 0, 0, 0.05)',
+          transform: 'translateX(-5px)',
         }}
       >
-        <h2 style={{ fontSize: '22px', fontWeight: '800', marginBottom: '20px', color: '#222' }}>
+        <h2 style={{ fontSize: '22px', fontWeight: '800', marginTop: '-20px', marginBottom: '20px', color: '#222' }}>
           자주 묻는 질문
         </h2>
 
