@@ -113,16 +113,17 @@ const container = {
 const filterWrapper = {
   display: 'flex',
   gap: '10px',
-  marginTop: '-20px',
-  marginBottom: '30px',
+  marginTop: '-10px',
+  marginBottom: '35px',
 };
 
 const filterButton = {
+  fontSize: '13px',
   backgroundColor: '#f0f0f0',
   border: '1px solid #ccc',
   borderRadius: '12px',
-  padding: '6px 12px',
-  fontWeight: 'bold',
+  padding: '6px 8.8px',
+  fontWeight: '600',
 };
 
 const filterButtonActive = {

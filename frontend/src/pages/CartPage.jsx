@@ -1,405 +1,285 @@
 import React, { useState } from "react";
 
-// *반드시* public/index.html <head>에 몬트세라트 폰트 추가!
-// <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@900&display=swap" rel="stylesheet">
-
 export default function CartPage() {
   const [items, setItems] = useState([
     {
       id: 1,
-      title: "미적분학",
-      author: "김윤진",
-      price: 2900,
-      image: "https://contents.kyobobook.co.kr/sih/fit-in/400x0/pdt/9791165215098.jpg",
+      title: "『국내도서』 핵심 미적분학 ─ 제 9 판",
+      author: "James Stewart, Daniel Clegg, Saleem Watson",
+      translator: "용수학부편찬위원회",
+      publisher: "경문사(경문북스)",
+      date: "2021년 3월",
+      subject: "미적분학1 (이윤진 교수)",
+      price: 5000,
+      quantity: 4,
+      image: "https://image.kyobobook.co.kr/images/book/large/350/l9791168472350.jpg"
     },
     {
       id: 2,
-      title: "미적분학",
-      author: "김윤진",
-      price: 2900,
-      image: "https://contents.kyobobook.co.kr/sih/fit-in/400x0/pdt/9791165215098.jpg",
+      title: "『국내도서』 핵심 미적분학 ─ 제 9 판",
+      author: "James Stewart, Daniel Clegg, Saleem Watson",
+      translator: "용수학부편찬위원회",
+      publisher: "경문사(경문북스)",
+      date: "2021년 3월",
+      subject: "미적분학1 (이윤진 교수)",
+      price: 5000,
+      quantity: 1,
+      image: "https://image.kyobobook.co.kr/images/book/large/350/l9791168472350.jpg"
     },
+    {
+      id: 3,
+      title: "『국내도서』 핵심 미적분학 ─ 제 9 판",
+      author: "James Stewart, Daniel Clegg, Saleem Watson",
+      translator: "용수학부편찬위원회",
+      publisher: "경문사(경문북스)",
+      date: "2021년 3월",
+      subject: "미적분학1 (이윤진 교수)",
+      price: 5000,
+      quantity: 1,
+      image: "https://image.kyobobook.co.kr/images/book/large/350/l9791168472350.jpg"
+    }
   ]);
 
-  // 수량 변경
+  const [selected, setSelected] = useState(items.map(() => true));
+
   const handleQuantityChange = (id, delta) => {
     setItems(items =>
       items.map(item =>
         item.id === id
-          ? { ...item, quantity: Math.max(1, (item.quantity || 1) + delta) }
+          ? { ...item, quantity: Math.max(1, item.quantity + delta) }
           : item
       )
     );
   };
 
-  // 삭제
   const handleRemove = id => {
+    const index = items.findIndex(item => item.id === id);
     setItems(items => items.filter(item => item.id !== id));
+    setSelected(selected => selected.filter((_, i) => i !== index));
   };
 
-  // 총 대여 금액
-  const totalRentPrice = items.reduce(
-    (sum, item) => sum + (item.price * (item.quantity || 1)),
+  const toggleSelect = index => {
+    const updated = [...selected];
+    updated[index] = !updated[index];
+    setSelected(updated);
+  };
+
+  const toggleAll = () => {
+    const allChecked = selected.every(Boolean);
+    setSelected(selected.map(() => !allChecked));
+  };
+
+  const handleRemoveAll = () => {
+    setItems([]);
+    setSelected([]);
+  };
+
+  const totalPrice = items.reduce(
+    (sum, item, i) => selected[i] ? sum + item.price * item.quantity : sum,
     0
   );
 
-  // 주문 결제 페이지 이동 (실제 라우터라면 navigate 사용)
-  const handleOrder = () => {
-    window.location.href = "/order-payment";
-  };
-
   return (
-    <div
-      style={{
-        fontFamily: "Pretendard, 'Montserrat', sans-serif",
-        background: "#fff",
-        maxWidth: "1440px",
-        minHeight: "2500px",
-        margin: "0 auto",
-        position: "relative",
-        display: "flex",
-        flexDirection: "column",
-      }}
-    >
-      {/* 로고 */}
-      <div style={{ textAlign: "center", margin: "70px 0 0 0" }}>
-        <span
-          style={{
-            fontFamily: "'Montserrat', Pretendard, sans-serif",
-            fontWeight: 900,
-            fontSize: "80px",
-            color: "#5288F8",
-            letterSpacing: "2px",
-            textShadow: "0 2px 16px #7ba7fc55, 0 8px 24px #7ba7fc15",
-            lineHeight: "1",
-            userSelect: "none",
-          }}
-        >
-          BBOOK
-        </span>
-      </div>
+    <div style={{ maxWidth: "1100px", margin: "0 auto", padding: "40px 20px", fontFamily: "'Pretendard', sans-serif" }}>
 
-      {/* 네비게이션(오른쪽 정렬, 크기 늘림) */}
+      {/* 주문 단계 경로 표시 */}
       <div style={{
-        maxWidth: "1100px",
-        margin: "38px auto 0 auto",
-        display: "flex",
-        justifyContent: "flex-end",
+        textAlign: "right",
+        fontSize: "16px",
+        color: "#555",
+        position: "relative",
+        top: "40px"  
       }}>
-        <div style={{
-          fontSize: "25px",
-          color: "#888",
-          fontWeight: 400,
-          letterSpacing: "-1px"
-        }}>
-          <span style={{ color: "#888" }}>01 옵션선택 &gt; </span>
-          <span style={{ color: "#5288F8", fontWeight: 700 }}>02 내 책장</span>
-          <span style={{ color: "#888" }}> &gt; </span>
-          <span style={{ color: "#222", fontWeight: 600 }}>03 주문/결제</span>
-          <span style={{ color: "#888" }}> &gt; </span>
-          <span style={{ color: "#444", fontWeight: 700 }}>04 주문완료</span>
-        </div>
+        <span style={{ color: "#999" }}>이 옵션선택</span>
+        <span> &gt; </span>
+        <span style={{ color: "#3478f6", fontWeight: "bold" }}>02 장바구니</span>
+        <span> &gt; </span>
+        <span style={{ fontWeight: 500 }}>03 주문/결제</span>
+        <span> &gt; </span>
+        <span style={{ color: "#999", fontWeight: "bold" }}>04 주문완료</span>
       </div>
 
-      {/* <내 책장(n) 왼쪽 정렬, 크기+여백 늘림 */}
-      <div
-        style={{
-          maxWidth: "1100px",
-          margin: "52px auto 0 auto",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "flex-start"
-        }}
-      >
-        <h1
-          style={{
-            fontSize: "46px",
-            fontWeight: 900,
-            margin: 0,
-            letterSpacing: "-1px",
-            color: "#222"
-          }}
-        >
-          &lt; 내 책장(
-          <span style={{ color: "#5288F8" }}>{items.length}</span>)
-        </h1>
-      </div>
+      <h1 style={{ fontSize: "28px", fontWeight: 800, marginBottom: "24px" }}>＜ 장바구니</h1>
 
-      {/* 탭 (내 책장 > 주문 결제) - 좌/우 박스에 맞춰 넓게, 크기 크게 */}
-      <div
-        style={{
-          maxWidth: "1100px",
-          margin: "40px auto 38px auto",
-          display: "flex",
-          alignItems: "center",
-          background: "#f8fafd",
-          borderRadius: "18px 18px 0 0",
-          border: "2.5px solid #B7D3FC",
-          borderBottom: "5px solid #B7D3FC",
-          boxShadow: "0 10px 30px 0 #85aaff26",
-        }}
-      >
-        <div
-          style={{
-            flex: 1,
-            textAlign: "center",
-            fontWeight: 900,
-            color: "#5288F8",
-            fontSize: "38px",
-            padding: "38px 0",
-            fontFamily: "'Montserrat', Pretendard, sans-serif",
-          }}
-        >
-          내 책장
-        </div>
-        <div
-          style={{
-            width: "56px",
-            textAlign: "center",
-            fontSize: "42px",
-            color: "#5288F8",
-            fontWeight: 700,
-          }}
-        >
-          &gt;
-        </div>
-        <div
-          style={{
-            flex: 1,
-            textAlign: "center",
-            fontWeight: 900,
-            color: "#222",
-            fontSize: "38px",
-            padding: "38px 0",
-            fontFamily: "'Montserrat', Pretendard, sans-serif",
-          }}
-        >
-          주문 결제
-        </div>
-      </div>
-
-      {/* 메인 컨텐츠 */}
-      <div
-        style={{
-          maxWidth: "1100px",
-          margin: "0 auto",
-          display: "flex",
-          justifyContent: "space-between",
-          gap: "36px",
-          flexWrap: "wrap",
-        }}
-      >
-        {/* 왼쪽 박스 */}
-        <div style={{
-          flex: 2,
-          marginBottom: "32px",
-          transition: "height 0.3s",
-        }}>
-          <div
-            style={{
-              border: "2px solid #e7eaf3",
-              background: "#fff",
-              padding: "42px 42px 32px 42px",
-              borderRadius: "24px",
-              minHeight: items.length === 0 ? "200px" : "410px",
-              boxShadow: "0 8px 28px 0 #7ba7fc22",
-              transition: "min-height 0.3s",
-            }}
-          >
-            <div
-              style={{
-                fontWeight: 900,
-                fontSize: "27px",
-                color: "#5288F8",
-                marginBottom: "28px"
-              }}
-            >
-              내 책장
-            </div>
-            {items.length === 0 ? (
-              <div
-                style={{
-                  color: "#888",
-                  textAlign: "center",
-                  fontSize: "20px",
-                  padding: "100px 0"
-                }}
-              >
-                담은 책이 없습니다.
-              </div>
-            ) : (
-              items.map(item => (
-                <div
-                  key={item.id}
-                  style={{
-                    display: "flex",
-                    justifyContent: "space-between",
-                    alignItems: "center",
-                    marginBottom: "40px"
-                  }}
-                >
-                  <div style={{ display: "flex", gap: "24px", alignItems: "center" }}>
-                    <img
-                      src={item.image}
-                      alt="미적분학"
-                      style={{
-                        width: "120px",
-                        height: "150px",
-                        objectFit: "cover",
-                        borderRadius: "12px",
-                        border: "2px solid #e5e9f3",
-                        boxShadow: "0 2px 12px #85aaff35"
-                      }}
-                    />
-                    <div>
-                      <div style={{ fontWeight: 900, fontSize: "26px", color: "#212326", marginBottom: "8px" }}>
-                        {item.title}
-                      </div>
-                      <div style={{ fontSize: "20px", color: "#5288F8", fontWeight: 700, marginBottom: "4px" }}>
-                        {item.author}
-                      </div>
-                      <div style={{ fontSize: "23px", color: "#fa4d2c", fontWeight: 900 }}>
-                        {item.price.toLocaleString()}원
-                      </div>
-                      {/* 수량 버튼 */}
-                      <div style={{ display: "flex", alignItems: "center", gap: "12px", marginTop: "10px" }}>
-                        <button
-                          onClick={() => handleQuantityChange(item.id, -1)}
-                          style={{
-                            width: "34px",
-                            height: "34px",
-                            fontSize: "24px",
-                            fontWeight: "bold",
-                            color: "#5288F8",
-                            border: "2px solid #c2d3fa",
-                            borderRadius: "9px",
-                            background: "#fafdff",
-                            cursor: "pointer",
-                            outline: "none"
-                          }}
-                        >
-                          -
-                        </button>
-                        <span style={{ fontSize: "22px", width: "40px", textAlign: "center" }}>{item.quantity || 1}</span>
-                        <button
-                          onClick={() => handleQuantityChange(item.id, 1)}
-                          style={{
-                            width: "34px",
-                            height: "34px",
-                            fontSize: "24px",
-                            fontWeight: "bold",
-                            color: "#5288F8",
-                            border: "2px solid #c2d3fa",
-                            borderRadius: "9px",
-                            background: "#fafdff",
-                            cursor: "pointer",
-                            outline: "none"
-                          }}
-                        >
-                          +
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                  {/* 삭제 버튼 */}
-                  <button
-                    onClick={() => handleRemove(item.id)}
-                    style={{
-                      border: "none",
-                      background: "none",
-                      color: "#949ca9",
-                      textDecoration: "underline",
-                      fontSize: "18px",
-                      cursor: "pointer",
-                      marginLeft: "26px",
-                      minWidth: "52px"
-                    }}
-                  >
-                    삭제
-                  </button>
-                </div>
-              ))
-            )}
-          </div>
-        </div>
-        {/* 오른쪽 박스 */}
-        <div style={{
-          flex: 1,
-          marginBottom: "32px",
-          minWidth: "310px",
-        }}>
-          <div
-            style={{
-              border: "2px solid #e7eaf3",
-              background: "#fff",
-              padding: "42px 32px",
-              borderRadius: "24px",
-              minHeight: "320px",
-              height: "fit-content",
-              boxShadow: "0 8px 28px 0 #7ba7fc22",
-            }}
-          >
-            <div style={{ fontWeight: 900, fontSize: "27px", color: "#5288F8", marginBottom: "32px" }}>
-              대여 예상 금액
-            </div>
-            <div style={{
-              display: "flex",
-              justifyContent: "space-between",
-              marginBottom: "22px",
-              fontSize: "22px"
+      <div style={{ display: "flex", gap: "36px", alignItems: "flex-start" }}>
+        {/* 왼쪽: 책 리스트 */}
+        <div style={{ flex: 3 }}>
+          {/* 상단: 전체 선택/삭제 */}
+          <div style={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            padding: "16px 20px",
+            border: "1px solid #ccc",
+            borderRadius: "10px 10px 0 0",
+            backgroundColor: "#f7f7f7",
+            fontSize: "16px",
+            fontWeight: "bold"
+          }}>
+            <label>
+              <input
+                type="checkbox"
+                checked={selected.every(Boolean)}
+                onChange={toggleAll}
+                style={{ marginRight: "8px" }}
+              />
+              전체 선택
+            </label>
+            <button onClick={handleRemoveAll} style={{
+              background: "none",
+              border: "none",
+              color: "#777",
+              fontSize: "14px",
+              cursor: "pointer"
             }}>
-              <div>총 대여 금액</div>
-              <div style={{ fontWeight: 900, color: "#212326" }}>{totalRentPrice.toLocaleString()}원</div>
-            </div>
-            <hr />
-            <button
-              onClick={handleOrder}
-              style={{
-                width: "100%",
-                marginTop: "32px",
-                padding: "20px 0",
-                background: "#5288F8",
-                color: "#fff",
-                borderRadius: "12px",
-                border: "none",
-                fontWeight: 900,
-                fontSize: "23px",
-                cursor: "pointer",
-                boxShadow: "0 2px 10px #e6f1ff55"
-              }}
-            >
-              대여하기 ({items.length})
+              전체 삭제
             </button>
           </div>
+
+          {/* 스크롤 가능한 도서 리스트 */}
+          <div style={{
+            border: "1px solid #ccc",
+            borderTop: "none",
+            borderRadius: "0 0 10px 10px",
+            height: items.length > 2 ? "600px" : "auto",
+            overflowY: items.length > 2 ? "auto" : "visible",  
+            boxSizing: "border-box",
+            display: "flex",
+            paddingRight: "6px",
+            flexDirection: "column",
+          }}>
+            {items.map((item, index) => (
+              <div key={item.id} style={{
+                flexShrink: 0,     
+                display: "flex",
+                padding: "20px",
+                borderBottom: index !== items.length - 1 ? "1px solid #eee" : "none",
+                backgroundColor: "#fff",
+                alignItems: "flex-start"
+              }}>
+                <input
+                  type="checkbox"
+                  checked={selected[index]}
+                  onChange={() => toggleSelect(index)}
+                  style={{ marginTop: "4px", marginRight: "16px" }}
+                />
+                <img
+                  src={item.image}
+                  alt="책 이미지"
+                  style={{
+                    width: "100px",
+                    height: "130px",
+                    objectFit: "cover",
+                    border: "1px solid #ddd",
+                    borderRadius: "6px",
+                    marginRight: "16px"
+                  }}
+                />
+                <div style={{ flex: 1 }}>
+                  <div style={{ display: "flex", justifyContent: "space-between" }}>
+                    <div>
+                      <div style={{ fontSize: "16px", fontWeight: "bold", marginBottom: "4px" }}>{item.title}</div>
+                      <div style={{ fontSize: "13px", color: "#333" }}>
+                        {item.author} (지은이), {item.translator} (옮긴이) | {item.publisher} | {item.date}
+                      </div>
+                      <div style={{ fontSize: "13px", color: "#1877f2", marginTop: "4px" }}>{item.subject}</div>
+                      <div style={{ fontSize: "17px", color: "#e53935", fontWeight: "bold", marginTop: "8px" }}>
+                        {item.price.toLocaleString()}원
+                      </div>
+                    </div>
+                    <button
+                      onClick={() => handleRemove(item.id)}
+                      style={{
+                        background: "none",
+                        border: "none",
+                        color: "#666",
+                        textDecoration: "underline",
+                        fontSize: "13px",
+                        cursor: "pointer"
+                      }}
+                    >
+                      삭제
+                    </button>
+                  </div>
+
+                  {/* 수량 조절 */}
+                  <div style={{ display: "flex", justifyContent: "flex-end", marginTop: "16px", gap: "10px" }}>
+                    <button onClick={() => handleQuantityChange(item.id, -1)} style={qtyBtn}>−</button>
+                    <span style={{ fontSize: "14px", minWidth: "24px", textAlign: "center" }}>{item.quantity}</span>
+                    <button onClick={() => handleQuantityChange(item.id, 1)} style={qtyBtn}>＋</button>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* 오른쪽: 결제 요약 박스 */}
+        <div style={{
+          flex: 1,
+          position: "sticky",
+          top: "100px",
+          padding: "24px",
+          backgroundColor: "#f9fafd",
+          border: "1.5px solid #d0e4fd",
+          borderRadius: "16px",
+          height: "fit-content",
+          boxShadow: "0 2px 12px rgba(0,0,0,0.06)"
+        }}>
+          <h3 style={{ fontSize: "20px", fontWeight: 700, color: "#6595f9", marginBottom: "20px" }}>
+            결제 예정 금액
+          </h3>
+          <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "10px" }}>
+            <span>대여료</span>
+            <span>{totalPrice.toLocaleString()}원</span>
+          </div>
+          <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "10px" }}>
+            <span>배송비</span>
+            <span>0원</span>
+          </div>
+          <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "16px" }}>
+            <span>할인</span>
+            <span>0원</span>
+          </div>
+          <hr />
+          <div style={{
+            display: "flex",
+            justifyContent: "space-between",
+            marginTop: "16px",
+            fontWeight: "bold"
+          }}>
+            <span>총 결제 금액</span>
+            <span>{totalPrice.toLocaleString()}원</span>
+          </div>
+          <button style={{
+            marginTop: "24px",
+            width: "100%",
+            padding: "14px",
+            backgroundColor: "#6595f9",
+            color: "#fff",
+            fontWeight: 700,
+            border: "none",
+            borderRadius: "8px",
+            fontSize: "16px",
+            cursor: "pointer",
+            boxShadow: "0 2px 8px rgba(101, 149, 249, 0.3)"
+          }}>
+            대여하기
+          </button>
         </div>
       </div>
-      {/* 푸터 */}
-      <footer
-        style={{
-          marginTop: "auto",
-          background: "#ededed",
-          textAlign: "center",
-          padding: "50px 0 60px 0",
-          borderTopLeftRadius: "30px",
-          borderTopRightRadius: "30px",
-          fontFamily: "'Montserrat', Pretendard, sans-serif"
-        }}
-      >
-        <div
-          style={{
-            fontWeight: 900,
-            fontSize: "50px",
-            color: "#5288F8",
-            letterSpacing: "2px",
-            marginBottom: "16px"
-          }}
-        >
-          BBOOK
-        </div>
-        <div style={{ fontWeight: 700, fontSize: "28px", color: "#222" }}>
-          010-5493-7476
-        </div>
-      </footer>
     </div>
   );
 }
+
+const qtyBtn = {
+  width: "30px",
+  height: "30px",
+  fontSize: "16px",
+  fontWeight: "bold",
+  color: "#468ef9",
+  border: "1px solid #c9defc",
+  borderRadius: "6px",
+  background: "#f7fbff",
+  cursor: "pointer"
+};

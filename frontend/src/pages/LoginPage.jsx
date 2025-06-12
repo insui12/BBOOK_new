@@ -29,7 +29,13 @@ function LoginPage({ setIsLoggedIn }) {
 
   return (
     <div style={wrapperStyle}>
-      <h1 style={logoStyle} onClick={() => navigate('/')}>BBOOK</h1>
+      <img
+        src="/images/logo.png"
+        alt="BBOOK 로고"
+        onClick={() => navigate('/')}
+        style={{ height: '54px', marginBottom: '5px', marginTop: '80px', cursor: 'pointer' }}
+      />
+
 
       <form style={loginBoxStyle} onSubmit={(e) => { e.preventDefault(); handleLogin(); }}>
         <div style={inputWrapper}>
@@ -69,7 +75,7 @@ function LoginPage({ setIsLoggedIn }) {
             type="submit"
             style={{
               ...loginButtonStyle,
-              backgroundColor: isHovering ? '#007bff' : '#8cbcf9'
+              backgroundColor: isHovering ? '#0094ff' : '#8cbcf9'
             }}
             onMouseEnter={() => setIsHovering(true)}
             onMouseLeave={() => setIsHovering(false)}
@@ -87,9 +93,9 @@ function LoginPage({ setIsLoggedIn }) {
 
         <div style={{ textAlign: 'center', marginTop: '15px' }}>
           <img
-            src="/kakaotalk.png"
+            src="/images/kakaotalk.png"
             alt="카카오 로그인"
-            style={{ height: '30px', cursor: 'pointer' }}
+            style={{ height: '35px', marginBottom: '-15px', cursor: 'pointer' }}
             onClick={() => alert('카카오 로그인 기능은 아직 구현되지 않았습니다.')}
           />
         </div>
@@ -130,7 +136,8 @@ const loginBoxStyle = {
 
 const inputWrapper = {
   position: 'relative',
-  marginBottom: '15px'
+  marginBottom: '15px',
+  marginTop: '15px'
 };
 
 const inputFullStyle = {
