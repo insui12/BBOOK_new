@@ -145,7 +145,7 @@ const styles = {
   page: {
     maxWidth: "1100px",
     margin: "0 auto",
-    padding: "40px 20px",
+    padding: "40px 20px 0", // 하단 여백 줄임
     fontFamily: "'Pretendard', sans-serif"
   },
   stepBar: {
@@ -159,7 +159,8 @@ const styles = {
   container: {
     display: "flex",
     justifyContent: "space-between",
-    gap: "40px"
+    gap: "40px",
+    marginBottom: "0" // 여백 제거
   },
   leftBox: {
     flex: 2
@@ -204,32 +205,37 @@ const styles = {
     marginLeft: "6px",
     objectFit: "contain"
   },
-  rightBox: {
-    width: "300px",
-    padding: "24px",
-    border: "1px solid #ddd",
-    borderRadius: "12px",
-    backgroundColor: "#fff",
-    boxShadow: "0 4px 12px rgba(0, 0, 0, 0.05)"
-  },
+rightBox: {
+  width: "260px",
+  padding: "20px",
+  border: "1px solid #ddd",
+  borderRadius: "12px",
+  backgroundColor: "#fff",
+  boxShadow: "0 4px 12px rgba(0, 0, 0, 0.05)",
+  height: "fit-content",              // ✅ 핵심
+  display: "inline-block",            // ✅ 필요 시 함께 사용
+  paddingBottom: "12px",              // 여백 최소화
+  marginBottom: "0"                   // 불필요한 마진 제거
+},
   paymentTitle: {
     textAlign: "center",
-    fontSize: "18px",
+    fontSize: "16px",
     fontWeight: "bold",
     color: "#3B5FFF",
-    marginBottom: "20px"
+    marginBottom: "16px"
   },
   row: {
     display: "flex",
     justifyContent: "space-between",
-    fontSize: "15px",
-    marginBottom: "10px"
+    fontSize: "14px",
+    marginBottom: "8px"
   },
   payButton: {
-    marginTop: "24px",
+    marginTop: "20px",
+    marginBottom: "0",
     width: "100%",
     padding: "12px",
-    fontSize: "16px",
+    fontSize: "15px",
     fontWeight: "bold",
     backgroundColor: "#6595f9",
     color: "#fff",

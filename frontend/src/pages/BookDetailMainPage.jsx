@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import Header from '../components/Header';
+import UserMenu from '../components/UserMenu'; // ✅ 추가
 
 const bookData = [
   {
@@ -17,7 +18,7 @@ const bookData = [
   }
 ];
 
-export default function BookDetailMainPage() {
+export default function BookDetailMainPage({ isLoggedIn, setIsLoggedIn }) {
   const { id } = useParams();
   const navigate = useNavigate();
   const book = bookData.find(book => book.id === id);
@@ -46,6 +47,8 @@ export default function BookDetailMainPage() {
   return (
     <div>
       <Header />
+      <UserMenu isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} /> {/* ✅ 추가 */}
+
       <div style={{ maxWidth: '1000px', margin: '0 auto', marginTop: '-45px', padding: '12px', display: 'flex', flexDirection: 'column', gap: '8px' }}>
 
         <h2 style={{ fontSize: '37px', fontWeight: '700' }}>{book.title} <span style={{ fontSize: '14px', color: '#007bff' }}>[제9판]</span></h2>

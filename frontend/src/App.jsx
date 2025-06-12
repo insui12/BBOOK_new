@@ -9,7 +9,6 @@ import RefundPage from './pages/RefundPage';
 import BookDetailPage from './pages/BookDetailPage';
 import BookDetailMainPage from './pages/BookDetailMainPage';
 import OrderHistoryPage from './pages/OrderHistoryPage';
-import OrderCompletePage from './pages/OrderCompletePage';
 import CartPage from './pages/CartPage';
 import PaymentPage from './pages/PaymentPage';
 import SearchResultPage from './pages/SearchResultPage';
