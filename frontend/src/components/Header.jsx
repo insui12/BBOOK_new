@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { IoSearchSharp } from 'react-icons/io5';
+import logoImg from '../assets/logo.png'; // 로고 이미지 import
 
 const sampleBooks = [
   { id: 1, title: '씽크 파이썬', course: '파이썬 프로그래밍', professor: '양근석' },
@@ -62,7 +63,12 @@ export default function Header() {
 
   return (
     <div style={headerWrapper}>
-      <div style={logoStyle} onClick={() => navigate('/')}>BBOOK</div>
+      <img
+        src={logoImg}
+        alt="BBOOK 로고"
+        style={logoImageStyle}
+        onClick={() => navigate('/')}
+      />
       <div style={{ position: 'relative', flex: 1, maxWidth: '800px' }}>
         <div style={dynamicSearchWrapper}>
           <input
@@ -122,11 +128,9 @@ const headerWrapper = {
   gap: '40px',
 };
 
-const logoStyle = {
-  fontSize: '42px',
-  fontWeight: 'bold',
-  color: '#007bff',
-  marginTop: '40px',
+const logoImageStyle = {
+  height: '47px',
+  marginTop: '55px',
   cursor: 'pointer',
 };
 
@@ -141,9 +145,9 @@ const searchInput = {
 
 const searchIcon = {
   fontSize: '20px',
-  color: '#007bff',
+  color: '#0094ff',
   marginLeft: '12px',
-  cursor: 'pointer', // ⬅️ 클릭 가능하게
+  cursor: 'pointer',
 };
 
 const resultsBox = {
