@@ -1,4 +1,3 @@
-// src/pages/BookDetailPage.jsx
 import React from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import Header from '../components/Header.jsx';
@@ -21,7 +20,8 @@ const books = [
     overdueDays: 0,
     paymentMethod: '카카오페이',
     courses: [
-      { name: 'C++ 프로그래밍', professor: '안재근' },
+      { name: '미적분학 I', professor: '김민수' },
+      { name: '공학수학', professor: '이은정' }
     ]
   },
   {
@@ -103,7 +103,7 @@ function BookDetailPage() {
           <img src={book.image} alt="book" style={imageStyle} />
         </div>
         <div style={infoBox}>
-          <h2 style={{ marginBottom: '16px' }}>📘 주문 상세 정보</h2>
+          <h2 style={{ marginBottom: '16px', marginTop: '-7px' }}>📘 주문 상세 정보</h2>
           <div style={twoColGrid}>
             <span><strong>제목:</strong> {book.title}</span>
             <span><strong>저자:</strong> {book.author}</span>
@@ -142,8 +142,8 @@ const cardWrapper = {
   display: 'flex',
   gap: '40px',
   alignItems: 'flex-start',
-  justifyContent: 'center',
-  padding: '20px'
+  padding: '20px',
+  transform: 'translateX(505px)'
 };
 
 const imageBox = {
@@ -152,7 +152,9 @@ const imageBox = {
   backgroundColor: '#ddd',
   borderRadius: '10px',
   overflow: 'hidden',
-  flexShrink: 0
+  flexShrink: 0,
+  position: 'relative',
+  left: '-200px'
 };
 
 const imageStyle = {
@@ -165,14 +167,15 @@ const infoBox = {
   flex: 1,
   display: 'flex',
   flexDirection: 'column',
-  fontSize: '16px'
+  fontSize: '16px',
+  marginLeft: '-200px'
 };
 
 const twoColGrid = {
   display: 'grid',
-  gridTemplateColumns: '1fr 1fr',
+  gridTemplateColumns: '1.2fr 3.9fr',
   rowGap: '10px',
-  columnGap: '40px',
+  columnGap: '10px',
   marginBottom: '20px'
 };
 

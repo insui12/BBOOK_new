@@ -4,10 +4,18 @@ import { IoSearchSharp } from 'react-icons/io5';
 import logoImg from '../assets/logo.png'; // 로고 이미지 import
 
 const sampleBooks = [
-  { id: 1, title: '씽크 파이썬', course: '파이썬 프로그래밍', professor: '양근석' },
-  { id: 2, title: '자료구조와 알고리즘', course: '자료구조', professor: '양근석' },
-  { id: 3, title: '컴퓨터 네트워크', course: '네트워크', professor: '양근석' },
-  { id: 4, title: '인공지능 개론', course: 'AI입문', professor: '양근석' },
+  { id: 1, title: 'C++ programming', course: 'C++ 프로그래밍', professor: '안재근' },
+  { id: 2, title: '모두의 인공지능 기초수학', course: '인공지능', professor: '안재근' },
+  { id: 3, title: '명품 JAVA Programming', course: 'JAVA웹 개발', professor: '안재근' },
+  { id: 4, title: '인간관계론', course: '인간관계론', professor: '안재근' },
+  { id: 5, title: 'C언어로 쉽게 풀어쓴 자료구조', course: '자료구조', professor: '김숙연' },
+  { id: 6, title: 'Do it! 점프 투 파이썬', course: '컴퓨터공학입문과 파이썬', professor: '김숙연' },
+  { id: 7, title: '쉽게 풀어쓴 C언어 Express', course: '프로그래밍 입문', professor: '김숙연' },
+  { id: 8, title: '리눅스 시스템 원리와 실제', course: '시스템 프로그래밍', professor: '김숙연' },
+  { id: 9, title: '컴퓨팅 사고력을 키우는 이산수학 3판', course: '융합이산수학', professor: '양근석' },
+  { id: 10, title: '핵심 미분적분학 제9판', course: '미적분학2', professor: '양근석' },
+  { id: 11, title: '확률과 통계', course: '확률과 통계', professor: '양근석' },
+  { id: 12, title: '알기 쉽게 해설한 파이썬 with 컴퓨팅 사고력', course: '컴퓨팅적 사고', professor: '양근석' },
 ];
 
 function highlightMatch(text, query) {
@@ -46,6 +54,22 @@ export default function Header() {
     setResults(filtered);
   };
 
+  const handleSearch = () => {
+    if (!query.trim()) return;
+
+    const trimmedQuery = query.trim();
+    const predefinedRoutes = ['안재근', '양근석', '김숙연'];
+
+    if (predefinedRoutes.includes(trimmedQuery)) {
+      navigate(`/search/${trimmedQuery}`);
+    } else {
+      navigate(`/search?q=${encodeURIComponent(trimmedQuery)}`);
+    }
+
+    setQuery('');
+    setResults([]);
+  };
+
   const dynamicSearchWrapper = {
     display: 'flex',
     alignItems: 'center',
@@ -55,7 +79,7 @@ export default function Header() {
     borderBottomLeftRadius: query.trim() ? '0px' : '24px',
     borderBottomRightRadius: query.trim() ? '0px' : '24px',
     padding: '0px 20px',
-    marginTop: '45px',
+    marginTop: '20px',
     height: '40px',
     transition: 'border-radius 0.25s ease',
     boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)',
@@ -76,17 +100,14 @@ export default function Header() {
             placeholder="책 제목 / 수업명 / 교수명"
             value={query}
             onChange={(e) => handleQueryChange(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter') handleSearch();
+            }}
             style={searchInput}
           />
           <IoSearchSharp
             style={searchIcon}
-            onClick={() => {
-              if (query.trim()) {
-                navigate(`/search?q=${encodeURIComponent(query)}`);
-                setQuery('');
-                setResults([]);
-              }
-            }}
+            onClick={handleSearch}
           />
         </div>
 
@@ -98,7 +119,8 @@ export default function Header() {
                   key={book.id}
                   style={{ ...resultItem, cursor: 'pointer' }}
                   onClick={() => {
-                    navigate(`/search?q=${encodeURIComponent(query)}`);
+                    const trimmed = book.professor.trim();
+                    navigate(`/search/${encodeURIComponent(trimmed)}`);
                     setQuery('');
                     setResults([]);
                   }}
@@ -116,7 +138,6 @@ export default function Header() {
   );
 }
 
-// 스타일
 const headerWrapper = {
   display: 'flex',
   justifyContent: 'start',
@@ -130,7 +151,7 @@ const headerWrapper = {
 
 const logoImageStyle = {
   height: '47px',
-  marginTop: '55px',
+  marginTop: '30px',
   cursor: 'pointer',
 };
 

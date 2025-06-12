@@ -1,10 +1,11 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function CartPage() {
   const [items, setItems] = useState([
     {
       id: 1,
-      title: "『국내도서』 핵심 미적분학 ─ 제 9 판",
+      title: "핵심 미적분학 ─ 제 9 판",
       author: "James Stewart, Daniel Clegg, Saleem Watson",
       translator: "용수학부편찬위원회",
       publisher: "경문사(경문북스)",
@@ -16,31 +17,32 @@ export default function CartPage() {
     },
     {
       id: 2,
-      title: "『국내도서』 핵심 미적분학 ─ 제 9 판",
-      author: "James Stewart, Daniel Clegg, Saleem Watson",
-      translator: "용수학부편찬위원회",
-      publisher: "경문사(경문북스)",
-      date: "2021년 3월",
-      subject: "미적분학1 (이윤진 교수)",
+      title: "선형대수학 입문",
+      author: "Gilbert Strang",
+      translator: "수학교재연구회",
+      publisher: "사이언스북스",
+      date: "2020년 8월",
+      subject: "선형대수학 (홍길동 교수)",
       price: 5000,
-      quantity: 1,
-      image: "https://image.kyobobook.co.kr/images/book/large/350/l9791168472350.jpg"
+      quantity: 2,
+      image: "https://image.kyobobook.co.kr/images/book/large/472/l9788970752472.jpg"
     },
     {
       id: 3,
-      title: "『국내도서』 핵심 미적분학 ─ 제 9 판",
-      author: "James Stewart, Daniel Clegg, Saleem Watson",
-      translator: "용수학부편찬위원회",
-      publisher: "경문사(경문북스)",
-      date: "2021년 3월",
-      subject: "미적분학1 (이윤진 교수)",
+      title: "알고리즘 문제해결 전략",
+      author: "구종만",
+      translator: "없음",
+      publisher: "인사이트",
+      date: "2021년 5월",
+      subject: "알고리즘 (김유진 교수)",
       price: 5000,
       quantity: 1,
-      image: "https://image.kyobobook.co.kr/images/book/large/350/l9791168472350.jpg"
+      image: "https://image.kyobobook.co.kr/images/book/large/067/l9788966261067.jpg"
     }
   ]);
 
   const [selected, setSelected] = useState(items.map(() => true));
+  const navigate = useNavigate();
 
   const handleQuantityChange = (id, delta) => {
     setItems(items =>
@@ -81,30 +83,39 @@ export default function CartPage() {
 
   return (
     <div style={{ maxWidth: "1100px", margin: "0 auto", padding: "40px 20px", fontFamily: "'Pretendard', sans-serif" }}>
-
-      {/* 주문 단계 경로 표시 */}
+      {/* 상단 단계 표시 */}
       <div style={{
         textAlign: "right",
         fontSize: "16px",
         color: "#555",
-        position: "relative",
-        top: "40px"  
+        marginTop: "20px",
+        marginRight: "50px",
+        marginBottom: "-57px",
       }}>
-        <span style={{ color: "#999" }}>이 옵션선택</span>
-        <span> &gt; </span>
-        <span style={{ color: "#3478f6", fontWeight: "bold" }}>02 장바구니</span>
-        <span> &gt; </span>
-        <span style={{ fontWeight: 500 }}>03 주문/결제</span>
-        <span> &gt; </span>
-        <span style={{ color: "#999", fontWeight: "bold" }}>04 주문완료</span>
+        <span style={{ color: "#3478f6", fontWeight: "bold" }}>장바구니</span>
+        <span>&gt;</span>
+        <span style={{ color: "#333", fontWeight: "bold" }}>주문/결제</span>
+        <span>&gt;</span>
+        <span style={{ fontWeight: "bold" }}>주문완료</span>
       </div>
 
-      <h1 style={{ fontSize: "28px", fontWeight: 800, marginBottom: "24px" }}>＜ 장바구니</h1>
+      <h1
+        style={{
+          fontSize: "28px",
+          fontWeight: 800,
+          marginBottom: "24px",
+          cursor: "pointer",
+          display: "inline-block"
+        }}
+        onClick={() => navigate(-1)}
+      >
+        ＜ 장바구니
+      </h1>
 
       <div style={{ display: "flex", gap: "36px", alignItems: "flex-start" }}>
-        {/* 왼쪽: 책 리스트 */}
+        {/* 왼쪽 책 리스트 */}
         <div style={{ flex: 3 }}>
-          {/* 상단: 전체 선택/삭제 */}
+          {/* 상단 전체 선택 */}
           <div style={{
             display: "flex",
             justifyContent: "space-between",
@@ -114,7 +125,8 @@ export default function CartPage() {
             borderRadius: "10px 10px 0 0",
             backgroundColor: "#f7f7f7",
             fontSize: "16px",
-            fontWeight: "bold"
+            fontWeight: "bold",
+            marginBottom: "2px",
           }}>
             <label>
               <input
@@ -136,13 +148,13 @@ export default function CartPage() {
             </button>
           </div>
 
-          {/* 스크롤 가능한 도서 리스트 */}
+          {/* 책 리스트 */}
           <div style={{
             border: "1px solid #ccc",
             borderTop: "none",
             borderRadius: "0 0 10px 10px",
-            height: items.length > 2 ? "600px" : "auto",
-            overflowY: items.length > 2 ? "auto" : "visible",  
+            height: items.length > 2 ? "500px" : "auto",
+            overflowY: items.length > 2 ? "auto" : "visible",
             boxSizing: "border-box",
             display: "flex",
             paddingRight: "6px",
@@ -150,18 +162,18 @@ export default function CartPage() {
           }}>
             {items.map((item, index) => (
               <div key={item.id} style={{
-                flexShrink: 0,     
-                display: "flex",
-                padding: "20px",
+                flexShrink: 0,
+                padding: "12px 20px",
                 borderBottom: index !== items.length - 1 ? "1px solid #eee" : "none",
                 backgroundColor: "#fff",
-                alignItems: "flex-start"
+                display: "flex",
+                alignItems: "center"
               }}>
                 <input
                   type="checkbox"
                   checked={selected[index]}
                   onChange={() => toggleSelect(index)}
-                  style={{ marginTop: "4px", marginRight: "16px" }}
+                  style={{ marginRight: "16px", marginTop: "6px" }}
                 />
                 <img
                   src={item.image}
@@ -176,34 +188,37 @@ export default function CartPage() {
                   }}
                 />
                 <div style={{ flex: 1 }}>
-                  <div style={{ display: "flex", justifyContent: "space-between" }}>
-                    <div>
-                      <div style={{ fontSize: "16px", fontWeight: "bold", marginBottom: "4px" }}>{item.title}</div>
-                      <div style={{ fontSize: "13px", color: "#333" }}>
-                        {item.author} (지은이), {item.translator} (옮긴이) | {item.publisher} | {item.date}
-                      </div>
-                      <div style={{ fontSize: "13px", color: "#1877f2", marginTop: "4px" }}>{item.subject}</div>
-                      <div style={{ fontSize: "17px", color: "#e53935", fontWeight: "bold", marginTop: "8px" }}>
-                        {item.price.toLocaleString()}원
-                      </div>
-                    </div>
+                  <div style={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                    marginBottom: "4px"
+                  }}>
+                    <div style={{ fontSize: "16px", fontWeight: "bold" }}>{item.title}</div>
                     <button
                       onClick={() => handleRemove(item.id)}
                       style={{
                         background: "none",
                         border: "none",
                         color: "#666",
-                        textDecoration: "underline",
                         fontSize: "13px",
-                        cursor: "pointer"
+                        cursor: "pointer",
+                        textDecoration: "underline"
                       }}
                     >
                       삭제
                     </button>
                   </div>
 
-                  {/* 수량 조절 */}
-                  <div style={{ display: "flex", justifyContent: "flex-end", marginTop: "16px", gap: "10px" }}>
+                  <div style={{ fontSize: "13px", color: "#333" }}>
+                    {item.author} (지은이), {item.translator} (옮긴이) | {item.publisher} | {item.date}
+                  </div>
+                  <div style={{ fontSize: "13px", color: "#1877f2", marginTop: "4px" }}>{item.subject}</div>
+                  <div style={{ fontSize: "17px", color: "#e53935", fontWeight: "bold", marginTop: "8px" }}>
+                    {item.price.toLocaleString()}원
+                  </div>
+
+                  <div style={{ display: "flex", justifyContent: "flex-end", marginTop: "1px", gap: "10px" }}>
                     <button onClick={() => handleQuantityChange(item.id, -1)} style={qtyBtn}>−</button>
                     <span style={{ fontSize: "14px", minWidth: "24px", textAlign: "center" }}>{item.quantity}</span>
                     <button onClick={() => handleQuantityChange(item.id, 1)} style={qtyBtn}>＋</button>
@@ -214,7 +229,7 @@ export default function CartPage() {
           </div>
         </div>
 
-        {/* 오른쪽: 결제 요약 박스 */}
+        {/* 오른쪽 결제 요약 */}
         <div style={{
           flex: 1,
           position: "sticky",

@@ -113,8 +113,8 @@ const container = {
 const filterWrapper = {
   display: 'flex',
   gap: '10px',
-  marginTop: '-10px',
-  marginBottom: '35px',
+  marginTop: '50px',
+  marginBottom: '20px',
 };
 
 const filterButton = {
@@ -142,13 +142,16 @@ const cardWrapper = {
 
 const statusBadge = {
   display: 'inline-block',
-  padding: '6px 12px',
+  padding: '6px 25px',
   fontWeight: 'bold',
   fontSize: '14px',
   borderRadius: '6px',
   color: '#333',
-  marginBottom: '10px',
+  marginBottom: '15px',
+  minWidth: '80px',       // ✅ 추가: 최소 너비 고정
+  textAlign: 'center',    // ✅ 가운데 정렬
 };
+
 
 const getStatusColor = (status) => {
   switch (status) {
@@ -223,6 +226,10 @@ const pageButton = {
 
 const pageButtonActive = {
   ...pageButton,
-  backgroundColor: '#007bff',
-  color: 'white',
+  backgroundColor: 'transparent',  // 배경 제거
+  border: 'none',                  // 테두리 제거
+  color: '#aaa',                   // 연한 회색
+  cursor: 'default',               // 클릭 비활성 느낌
+  fontWeight: 'normal',
 };
+

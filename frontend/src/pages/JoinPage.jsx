@@ -32,51 +32,36 @@ function JoinPage() {
 
   const openModal = (type) => {
     let content = '';
-    if (type === 'terms') content = `
-[서비스 개요]
+    if (type === 'terms') content = `[서비스 개요]
 - 본 서비스는 대학생 대상 중고 전공서적 ‘대여 전용’ 플랫폼입니다.
-
 [대여 기간]
 - 기본 대여 기간은 7일이며, 연장과 조기 반납이 가능합니다.
-
 [책 상태 확인]
 - 책 수령 전후 사진 촬영이 권장되며, 이상 시 24시간 내 신고 바랍니다.
-
 [훼손 및 분실]
 - 책 훼손이나 분실 시, 운영 기준에 따라 보상금이 청구될 수 있습니다.
-
 [결제 및 환불]
 - 결제는 즉시 처리되며, 발송 전까지 전액 환불이 가능합니다.
-
 [책 사용 시 주의사항]
 - 고의적 훼손, 낙서 등이 반복될 경우 서비스 이용이 제한될 수 있습니다.`;
 
-    if (type === 'privacy') content = `
-[수집 항목]
+    if (type === 'privacy') content = `[수집 항목]
 - 이름, 연락처, 학교/학번, 대여/반납 기록 등 최소한의 정보만 수집합니다.
-
 [수집 목적]
 - 도서 대여 및 반납 절차, 사용자 문의 응대, 부정이용 방지 등을 위해 사용됩니다.
-
 [보관 기간]
 - 회원 탈퇴 시까지 보관되며, 탈퇴 요청 시 즉시 파기됩니다.
-
 [제3자 제공]
 - 제3자에게 절대 제공되지 않으며, 내부 운영 목적에만 활용됩니다.
-
 [동의 거부 권리]
 - 개인정보 제공에 동의하지 않을 경우, 서비스 이용이 제한될 수 있습니다.`;
 
-    if (type === 'ad') content = `
-[광고 목적]
+    if (type === 'ad') content = `[광고 목적]
 - 새로운 도서 입고, 할인 소식, 대여 이벤트 등의 정보 제공을 위한 알림입니다.
-
 [수신 방법]
 - 이메일, 문자, 앱 푸시 등을 통해 전달될 수 있습니다.
-
 [수신 거부]
 - 언제든지 광고 수신 거부가 가능하며, 수신 거부 시 서비스 이용에는 제한이 없습니다.
-
 [선택 사항]
 - 본 항목은 선택 동의이며, 미동의해도 서비스 이용에는 영향이 없습니다.`;
 
@@ -91,19 +76,18 @@ function JoinPage() {
 
   return (
     <div style={{ padding: '40px', fontFamily: "'Noto Sans KR', sans-serif", backgroundColor: '#fff' }}>
-      <h1
+      {/* ✅ 텍스트 대신 이미지 로고 적용 */}
+      <img
+        src="/images/logo.png"
+        alt="BBOOK 로고"
         onClick={() => navigate('/')}
         style={{
-          color: '#6a9afc',
-          fontSize: '36px',
-          fontWeight: 'bold',
-          textAlign: 'center',
-          marginBottom: '40px',
-          cursor: 'pointer',
+          height: '45px',
+          display: 'block',
+          margin: '60px auto 30px auto',
+          cursor: 'pointer'
         }}
-      >
-        BBOOK
-      </h1>
+      />
 
       <div style={{ maxWidth: '400px', margin: '0 auto' }}>
         <label>이름 *</label>
@@ -161,7 +145,6 @@ function JoinPage() {
         </button>
       </div>
 
-      {/* ✅ 모달 구현 */}
       {showModal && (
         <div style={modalOverlay} onClick={closeModal}>
           <div style={modalBox} onClick={(e) => e.stopPropagation()}>
@@ -193,7 +176,7 @@ const agreeRow = {
 };
 
 const viewButton = {
-  fontSize: '12px',
+  fontSize: '12x',
   color: '#4a7efc',
   background: 'none',
   border: 'none',
@@ -203,7 +186,7 @@ const viewButton = {
 
 const submitButton = {
   ...inputStyle,
-  marginTop: '25px',
+  marginTop: '32px',
   backgroundColor: '#4a7efc',
   color: 'white',
   border: 'none',
@@ -227,7 +210,7 @@ const modalOverlay = {
 const modalBox = {
   position: 'relative',
   width: '300px',
-  padding: '10px 20px 20px 20px', // 🔽 상단 padding만 줄임
+  padding: '10px 20px 20px 20px',
   backgroundColor: '#fff',
   borderRadius: '10px',
   boxShadow: '0 2px 8px rgba(0,0,0,0.2)',

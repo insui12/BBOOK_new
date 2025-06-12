@@ -6,46 +6,46 @@ import UserMenu from '../components/UserMenu.jsx';
 const searchData = [
   {
     id: '1',
-    title: 'C++ programming',
-    author: '황기태',
-    publisher: '생능출판',
-    publishDate: '2018년 3월',
-    course: 'C++ 프로그래밍 / 안재근',
+    title: '컴퓨팅 사고력을 키우는 이산수학 3판',
+    author: '박주미',
+    publisher: '한빛아카데미',
+    publishDate: '2021년 12월',
+    course: '융합이산수학 / 양근석',
     condition: '최상',
-    image: '/images/C++.jpg',
+    image: '/images/이산수학.png',
     price: 5000,
   },
   {
     id: '2',
-    title: '모두의 인공지능 기초수학',
-    author: '서지영',
-    publisher: '생능출판',
-    publishDate: '2020년 8월',
-    course: '인공지능 / 안재근',
+    title: '핵심 미분적분학 제9판',
+    author: 'James Stewart, Daniel Clegg, Saleem Watson (지은이), 응용수학부편찬위원회',
+    publisher: '경문사',
+    publishDate: '2021년 3월',
+    course: '미적분학2 / 양근석',
     condition: '좋음',
-    image: '/images/인공지능기초수학.png',
+    image: '/images/핵심미적분학.png',
     price: 5000,
   },
   {
     id: '3',
-    title: '명품 JAVA Programming',
-    author: '황기태, 김효수',
-    publisher: '생능출판',
-    publishDate: '2018년 6월',
-    course: 'JAVA웹 개발 / 안재근',
+    title: '확률과 통계',
+    author: '이재원',
+    publisher: '한빛아카데미',
+    publishDate: '2023년 6월',
+    course: '확률과 통계 / 양근석',
     condition: '중하',
-    image: '/images/자바.png',
+    image: '/images/확률과통계.png',
     price: 5000,
   },
   {
     id: '4',
-    title: '인간관계론',
-    author: '김혜숙, 박선환, 박숙희, 정미경, 이주희',
-    publisher: '양서원',
-    publishDate: '2016년 3월',
-    course: '인간관계론 / 권재기',
+    title: '알기 쉽게 해설한 파이썬 with 컴퓨팅 사고력',
+    author: '김충석, 김지연',
+    publisher: '한빛아카데미',
+    publishDate: '2023월 2월',
+    course: '컴퓨팅적 사고 / 양근석',
     condition: '상',
-    image: '/images/인간관계론.png',
+    image: '/images/파이썬컴퓨팅사고력.png',
     price: 5000,
   },
 ];
@@ -92,7 +92,7 @@ export default function SearchResultsPage({ isLoggedIn, setIsLoggedIn }) {
 
       <div style={{ width: '1000px', margin: '0 auto' }}>
         <h3 style={{ marginTop: '24px', fontSize: '22px' }}>
-          <strong style={{ color: '#007bff' }}>{query}안재근</strong>
+          <strong style={{ color: '#007bff' }}>{query}양근석</strong>
           <span style={{ color: '#000' }}> 검색결과</span>
         </h3>
         <p style={{ marginTop: '8px' }}>
