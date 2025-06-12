@@ -1,97 +1,242 @@
-// src/pages/PaymentPage.jsx
-import React from 'react';
-import Header from '../components/Header';
+import React, { useState } from "react";
+import NaverPayImg from "../assets/naverpay.png";
+import SamsungPayImg from "../assets/samsungpay.png";
 
 export default function PaymentPage() {
-  const book = {
-    id: '1',
-    title: '핵심 미적분학 - 제9판',
-    author: '최서진',
-    publisher: '북북출판',
-    price: 42000,
-    image: '/book1.jpg',
-  };
+  const rentCount = 2;
+  const unitPrice = 5000;
+  const totalPrice = rentCount * unitPrice;
 
-  if (!book) return <div style={{ padding: '40px' }}>책 정보를 불러올 수 없습니다.</div>;
+  const [paymentMethod, setPaymentMethod] = useState("bank");
+  const [tradeLocation, setTradeLocation] = useState("");
 
   return (
-    <div>
-      <Header />
-      <div style={{ maxWidth: '1000px', margin: '40px auto', padding: '24px' }}>
-        <h2 style={{ fontSize: '24px', fontWeight: 'bold' }}>&lt; 결제(n)</h2>
+    <div style={styles.page}>
+      {/* 상단 단계 표시 */}
+      <div style={styles.stepBar}>
+        <span style={{ color: "#3478f6", fontWeight: "bold" }}>장바구니</span>
+        <span> &gt; </span>
+        <span style={{ color: "#333", fontWeight: "bold" }}>주문/결제</span>
+        <span> &gt; </span>
+        <span style={{ fontWeight: "bold" }}>주문완료</span>
+      </div>
 
-        {/* 진행 표시 */}
-        <div style={{ display: 'flex', borderBottom: '2px solid #ccc', marginBottom: '30px' }}>
-          <div style={{ flex: 1, textAlign: 'center', padding: '12px', backgroundColor: '#f0f0f0' }}>주문 결제</div>
-          <div style={{ flex: 1, textAlign: 'center', padding: '12px', backgroundColor: '#e0e0e0' }}>주문 완료</div>
-        </div>
+      <h1 style={{ fontSize: "28px", fontWeight: 800, marginBottom: "24px" }}>＜ 결제</h1>
 
-        {/* 상품 정보 */}
-        <div style={{ display: 'flex', gap: '20px' }}>
-          {/* 왼쪽 */}
-          <div style={{ flex: 2 }}>
-            <div style={{ backgroundColor: '#fff', borderRadius: '12px', padding: '20px', marginBottom: '20px', border: '1px solid #ccc' }}>
-              <h3 style={{ fontSize: '20px', fontWeight: 'bold', marginBottom: '16px' }}>교재명</h3>
-              <div style={{ display: 'flex', gap: '20px' }}>
-                <img src={book.image} alt={book.title} style={{ width: '120px', height: '160px', objectFit: 'cover', borderRadius: '8px' }} />
-                <div>
-                  <p style={{ fontWeight: 'bold', marginBottom: '8px' }}>『국내도서』 {book.title}</p>
-                  <p style={{ fontSize: '18px', color: '#333' }}>{book.price.toLocaleString()}원</p>
-                </div>
+      <div style={styles.container}>
+        {/* 왼쪽 영역 */}
+        <div style={styles.leftBox}>
+          <div style={styles.groupBox}>
+            {/* 교재명 */}
+            <div style={styles.sectionBox}>
+              <div style={styles.sectionTitle}>교재</div>
+              <div style={styles.textRow}>
+                총 대여 교재 : <strong>{rentCount}권</strong>{" "}
+                <a href="#" style={styles.link}></a>
               </div>
             </div>
 
-            {/* 결제 수단 */}
-            <div style={{ backgroundColor: '#fff', borderRadius: '12px', padding: '20px', marginBottom: '20px', border: '1px solid #ccc' }}>
-              <h3 style={{ fontSize: '20px', fontWeight: 'bold', marginBottom: '16px' }}>결제수단</h3>
-              <ul>
-                <li>무통장입금(가상계좌)</li>
-                <li>간편결제(카카오페이, 네이버페이, 토스)</li>
-                <li>신용/체크카드</li>
-              </ul>
+            {/* 결제수단 */}
+            <div style={styles.sectionBox}>
+              <div style={styles.sectionTitle}>결제수단</div>
+              <label style={styles.radioRow}>
+                <input
+                  type="radio"
+                  name="pay"
+                  checked={paymentMethod === "bank"}
+                  onChange={() => setPaymentMethod("bank")}
+                />
+                <strong style={{ marginLeft: "6px" }}>무통장입금(가상계좌)</strong>
+              </label>
+
+              <label style={styles.radioRow}>
+                <input
+                  type="radio"
+                  name="pay"
+                  checked={paymentMethod === "simple"}
+                  onChange={() => setPaymentMethod("simple")}
+                />
+                <span style={{ marginLeft: "6px", display: "inline-flex", alignItems: "center" }}>
+                  간편결제 (
+                  <img src={NaverPayImg} alt="naverpay" style={styles.icon} />
+                  <img src={SamsungPayImg} alt="samsungpay" style={styles.icon} />
+                  )
+                </span>
+              </label>
+
+              <label style={styles.radioRow}>
+                <input
+                  type="radio"
+                  name="pay"
+                  checked={paymentMethod === "card"}
+                  onChange={() => setPaymentMethod("card")}
+                />
+                <span style={{ marginLeft: "6px" }}>신용/체크카드</span>
+              </label>
             </div>
 
             {/* 거래 장소 */}
-            <div style={{ backgroundColor: '#fff', borderRadius: '12px', padding: '20px', border: '1px solid #ccc' }}>
-              <h3 style={{ fontSize: '20px', fontWeight: 'bold', marginBottom: '16px' }}>거래 장소</h3>
-              <img src="/map.png" alt="지도" style={{ width: '100%', height: '200px', objectFit: 'cover', borderRadius: '8px' }} />
-              <div style={{ marginTop: '12px' }}>
-                <strong>상세주소:</strong> 1공학관 1층
-              </div>
+            <div style={styles.sectionBox}>
+              <div style={styles.sectionTitle}>거래 장소</div>
+              <label style={styles.radioRow}>
+                <input
+                  type="radio"
+                  name="location"
+                  checked={tradeLocation === "box"}
+                  onChange={() => setTradeLocation("box")}
+                />
+                <span style={{ marginLeft: "6px" }}>
+                  보관함 거래 <a href="#" style={styles.link}></a>
+                </span>
+              </label>
+              <label style={styles.radioRow}>
+                <input
+                  type="radio"
+                  name="location"
+                  checked={tradeLocation === "direct"}
+                  onChange={() => setTradeLocation("direct")}
+                />
+                <span style={{ marginLeft: "6px" }}>
+                  직거래 <a href="#" style={styles.link}></a>
+                </span>
+              </label>
             </div>
+          </div>
+        </div>
+
+        {/* 오른쪽 결제 박스 */}
+        <div style={styles.rightBox}>
+          <h3 style={styles.paymentTitle}>결제 예정 금액</h3>
+
+          <div style={styles.row}>
+            <span>대여료</span>
+            <span>{totalPrice.toLocaleString()}원</span>
+          </div>
+          <div style={styles.row}>
+            <span>배송비</span>
+            <span>0원</span>
+          </div>
+          <div style={styles.row}>
+            <span>할인</span>
+            <span>0원</span>
           </div>
 
-          {/* 오른쪽 요약 */}
-          <div style={{ flex: 1, backgroundColor: '#fff', borderRadius: '12px', padding: '20px', border: '1px solid #ccc' }}>
-            <h3 style={{ fontSize: '20px', fontWeight: 'bold', marginBottom: '16px' }}>최종 결제 금액</h3>
-            <div style={summaryLine}>
-              <span>총 상품 가격</span>
-              <span>{book.price.toLocaleString()}원</span>
-            </div>
-            <div style={summaryTotal}>
-              <span>총 결제 금액</span>
-              <span style={{ fontWeight: 'bold', fontSize: '18px' }}>{book.price.toLocaleString()}원</span>
-            </div>
-            <button style={{ marginTop: '20px', width: '100%', padding: '12px', backgroundColor: '#007bff', color: '#fff', border: 'none', borderRadius: '8px', fontWeight: 'bold' }}>
-              주문하기 (1)
-            </button>
+          <hr style={{ margin: "16px 0", borderColor: "#ddd" }} />
+
+          <div style={styles.row}>
+            <strong>총 결제 금액</strong>
+            <strong>{totalPrice.toLocaleString()}원</strong>
           </div>
+
+          <button
+            style={styles.payButton}
+            onMouseOver={(e) => (e.target.style.backgroundColor = "#2f51e0")}
+            onMouseOut={(e) => (e.target.style.backgroundColor = "#3B5FFF")}
+          >
+            결제하기
+          </button>
         </div>
       </div>
     </div>
   );
 }
 
-const summaryLine = {
-  display: 'flex',
-  justifyContent: 'space-between',
-  marginBottom: '10px'
-};
-
-const summaryTotal = {
-  display: 'flex',
-  justifyContent: 'space-between',
-  marginTop: '20px',
-  paddingTop: '10px',
-  borderTop: '1px solid #ccc'
+const styles = {
+  page: {
+    maxWidth: "1100px",
+    margin: "0 auto",
+    padding: "40px 20px",
+    fontFamily: "'Pretendard', sans-serif"
+  },
+  stepBar: {
+    textAlign: "right",
+    fontSize: "16px",
+    color: "#555",
+    marginTop: "20px",
+    marginRight: "50px",
+    marginBottom: "-57px"
+  },
+  container: {
+    display: "flex",
+    justifyContent: "space-between",
+    gap: "40px"
+  },
+  leftBox: {
+    flex: 2
+  },
+  groupBox: {
+    border: "1px solid #e0e0e0",
+    borderRadius: "16px",
+    padding: "20px",
+    backgroundColor: "#fefefe",
+    boxShadow: "0 2px 8px rgba(0, 0, 0, 0.03)",
+    display: "flex",
+    flexDirection: "column",
+    gap: "20px"
+  },
+  sectionBox: {
+    border: "1px solid #eee",
+    borderRadius: "8px",
+    padding: "20px",
+    backgroundColor: "#fafafa"
+  },
+  sectionTitle: {
+    fontWeight: "bold",
+    marginBottom: "12px"
+  },
+  textRow: {
+    fontSize: "15px",
+    color: "#333"
+  },
+  radioRow: {
+    display: "block",
+    marginBottom: "10px"
+  },
+  link: {
+    color: "#3478f6",
+    fontWeight: "bold",
+    textDecoration: "none",
+    marginLeft: "8px"
+  },
+  icon: {
+    width: "24px",
+    height: "24px",
+    marginLeft: "6px",
+    objectFit: "contain"
+  },
+  rightBox: {
+    width: "300px",
+    padding: "24px",
+    border: "1px solid #ddd",
+    borderRadius: "12px",
+    backgroundColor: "#fff",
+    boxShadow: "0 4px 12px rgba(0, 0, 0, 0.05)"
+  },
+  paymentTitle: {
+    textAlign: "center",
+    fontSize: "18px",
+    fontWeight: "bold",
+    color: "#3B5FFF",
+    marginBottom: "20px"
+  },
+  row: {
+    display: "flex",
+    justifyContent: "space-between",
+    fontSize: "15px",
+    marginBottom: "10px"
+  },
+  payButton: {
+    marginTop: "24px",
+    width: "100%",
+    padding: "12px",
+    fontSize: "16px",
+    fontWeight: "bold",
+    backgroundColor: "#6595f9",
+    color: "#fff",
+    border: "none",
+    borderRadius: "8px",
+    cursor: "pointer",
+    boxShadow: "0 4px 6px rgba(59, 95, 255, 0.2)",
+    transition: "background-color 0.2s"
+  }
 };

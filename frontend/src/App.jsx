@@ -28,6 +28,8 @@ function App() {
   return (
     <Router>
       <Routes>
+        <Route path="/book-detail/:id" element={<BookDetailMainPage />} />
+        <Route path="/PaymentPage/:id" element={<PaymentPage />} />
         <Route path="/" element={<MainPage isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />} />
         <Route path="/login" element={<LoginPage setIsLoggedIn={setIsLoggedIn} />} />
         <Route path="/join" element={<SignupPage />} />

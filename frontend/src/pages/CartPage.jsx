@@ -5,40 +5,38 @@ export default function CartPage() {
   const [items, setItems] = useState([
     {
       id: 1,
-      title: "핵심 미적분학 ─ 제 9 판",
-      author: "James Stewart, Daniel Clegg, Saleem Watson",
-      translator: "용수학부편찬위원회",
-      publisher: "경문사(경문북스)",
-      date: "2021년 3월",
-      subject: "미적분학1 (이윤진 교수)",
+      title: "C++ programming",
+      author: "황기태",
+      publisher: "생능출판",
+      date: "2018년 3월",
+      subject: "C++프로그래밍 (안재근 교수)",
       price: 5000,
       quantity: 4,
-      image: "https://image.kyobobook.co.kr/images/book/large/350/l9791168472350.jpg"
+      image: "/images/C++.jpg"
     },
-    {
+        {
       id: 2,
-      title: "선형대수학 입문",
-      author: "Gilbert Strang",
-      translator: "수학교재연구회",
-      publisher: "사이언스북스",
-      date: "2020년 8월",
-      subject: "선형대수학 (홍길동 교수)",
+      title: "C언어로 쉽게 풀어쓴 자료구조",
+      author: "천인국,공용해,하상호",
+      publisher: "생능출판",
+      date: "2019년 2월",
+      subject: "자료구조 (김숙연 교수)",
       price: 5000,
       quantity: 2,
-      image: "https://image.kyobobook.co.kr/images/book/large/472/l9788970752472.jpg"
+      image: "/images/자료구조.png"
     },
     {
       id: 3,
-      title: "알고리즘 문제해결 전략",
-      author: "구종만",
-      translator: "없음",
-      publisher: "인사이트",
-      date: "2021년 5월",
-      subject: "알고리즘 (김유진 교수)",
+      title: "컴퓨팅 사고력을 키우는 이산수학 3판",
+      author: "박주미",
+      publisher: "한빛아카데미",
+      date: "2021년 12월",
+      subject: "융합이산수학 (양근석 교수)",
       price: 5000,
       quantity: 1,
-      image: "https://image.kyobobook.co.kr/images/book/large/067/l9788966261067.jpg"
+      image: "/images/이산수학.png"
     }
+
   ]);
 
   const [selected, setSelected] = useState(items.map(() => true));
@@ -266,20 +264,23 @@ export default function CartPage() {
             <span>총 결제 금액</span>
             <span>{totalPrice.toLocaleString()}원</span>
           </div>
-          <button style={{
-            marginTop: "24px",
-            width: "100%",
-            padding: "14px",
-            backgroundColor: "#6595f9",
-            color: "#fff",
-            fontWeight: 700,
-            border: "none",
-            borderRadius: "8px",
-            fontSize: "16px",
-            cursor: "pointer",
-            boxShadow: "0 2px 8px rgba(101, 149, 249, 0.3)"
-          }}>
-            대여하기
+          <button
+            style={{
+              marginTop: "24px",
+              width: "100%",
+              padding: "14px",
+              backgroundColor: "#6595f9",
+              color: "#fff",
+              fontWeight: 700,
+              border: "none",
+              borderRadius: "8px",
+              fontSize: "16px",
+              cursor: "pointer",
+              boxShadow: "0 2px 8px rgba(101, 149, 249, 0.3)"
+            }}
+            onClick={() => navigate('/PaymentPage/:id')}  // ✅ 여기에 추가
+          >
+            결제하기
           </button>
         </div>
       </div>
