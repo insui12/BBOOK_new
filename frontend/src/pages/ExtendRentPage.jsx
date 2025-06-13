@@ -4,8 +4,8 @@ import Header from '../components/Header';
 import UserMenu from '../components/UserMenu';
 
 const fakeBooks = [
-  { id: '3', title: '융합이산수학', image: '/images/융합 이산수학.jpg', dueDate: '2025-06-10' },
-  { id: '2', title: '핵심미적분학', image: '/images/핵심미적분학.jpg', dueDate: '2025-06-07' },
+  { id: '3', title: '융합이산수학', image: '/images/이산수학.png', dueDate: '2025-06-10' },
+  { id: '2', title: '핵심미적분학', image: '/images/핵심미적분학.png', dueDate: '2025-06-07' },
 ];
 
 export default function ExtendRentPage() {
@@ -20,8 +20,18 @@ export default function ExtendRentPage() {
   }, [id]);
 
   const handleExtend = () => {
-    alert(`"${book.title}" 도서의 대여가 ${extendDays} 연장되었습니다.`);
-    navigate('/orders');
+    const days = parseInt(extendDays.replace('일', ''), 10); // 숫자만 추출
+    const price = days * 5000;
+
+    // 결제 페이지로 이동하며 연장 정보 전달
+    navigate("/PaymentPage/extend", {
+      state: {
+        type: "extend",
+        title: book.title,
+        days,
+        price,
+      },
+    });
   };
 
   if (!book) return <div style={{ padding: '40px' }}>책 정보를 불러오는 중...</div>;
@@ -83,28 +93,28 @@ export default function ExtendRentPage() {
 
             {/* 연장 기간 선택 */}
             <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-  <label style={{ fontSize: '20px', fontWeight: 'bold' }}>
-    연장 기간 선택:
-  </label>
-  <select
-    value={extendDays}
-    onChange={(e) => setExtendDays(e.target.value)}
-    style={{
-      fontSize: '16px',
-    padding: '2px 8px',          // 위아래 padding 최소화
-    height: '22px',              // 높이 줄이기
-    lineHeight: '1',             // 줄 간격도 줄이기
-    verticalAlign: 'middle',     // 라벨과 수직 정렬 맞춤
-    borderRadius: '6px',
-    border: '1px solid #ccc',
-    marginTop: '4px', 
-    }}
-  >
-    <option>7일</option>
-    <option>14일</option>
-    <option>30일</option>
-  </select>
-</div>
+              <label style={{ fontSize: '20px', fontWeight: 'bold' }}>
+                연장 기간 선택:
+              </label>
+              <select
+                value={extendDays}
+                onChange={(e) => setExtendDays(e.target.value)}
+                style={{
+                  fontSize: '16px',
+                  padding: '2px 8px',
+                  height: '22px',
+                  lineHeight: '1',
+                  verticalAlign: 'middle',
+                  borderRadius: '6px',
+                  border: '1px solid #ccc',
+                  marginTop: '4px',
+                }}
+              >
+                <option>7일</option>
+                <option>14일</option>
+                <option>30일</option>
+              </select>
+            </div>
           </div>
         </div>
 

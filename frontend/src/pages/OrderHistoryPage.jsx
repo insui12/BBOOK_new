@@ -11,8 +11,8 @@ export default function OrderHistoryPage({ isLoggedIn, setIsLoggedIn }) {
 
   const orderHistory = [
     { id: '1', title: 'C++ programing', orderDate: '2025-05-01', quantity: 1, price: 15200, image: '/images/C++.jpg', semester: '25-1학기', status: '주문완료' },
-    { id: '2', title: '핵심미적분학', orderDate: '2025-05-01', quantity: 1, price: 16800, image: '/images/핵심미적분학.jpg', semester: '25-1학기', status: '대여중' },
-    { id: '3', title: '융합 이산수학', orderDate: '2024-12-10', quantity: 1, price: 17000, image: '/images/융합 이산수학.jpg', semester: '25-2학기', status: '연체중' },
+    { id: '2', title: '핵심미적분학', orderDate: '2025-05-01', quantity: 1, price: 16800, image: '/images/핵심미적분학.png', semester: '25-1학기', status: '대여중' },
+    { id: '3', title: '융합 이산수학', orderDate: '2024-12-10', quantity: 1, price: 17000, image: '/images/이산수학.png', semester: '25-2학기', status: '연체중' },
     { id: '4', title: '선형대수학', orderDate: '2024-12-10', quantity: 1, price: 19000, image: '/images/선형대수학.jpg', semester: '25-2학기', status: '거래완료' },
   ];
 

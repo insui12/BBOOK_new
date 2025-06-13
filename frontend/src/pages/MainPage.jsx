@@ -72,6 +72,12 @@ export default function MainPage({ isLoggedIn, setIsLoggedIn }) {
       '프로그래밍': '/search/프로그래밍',
       'C': '/search/C',
       '핵심미적분학': '/book-detail/1',
+      '핵심': '/book-detail/1',
+      '핵심 미적분학': '/book-detail/1',
+      '핵심미적분': '/book-detail/1',
+      '미적분학': '/book-detail/1',
+      '미적분': '/book-detail/1',
+      '미적': '/book-detail/1',
     };
 
     if (hardcodedRoutes[query.trim()]) {

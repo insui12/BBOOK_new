@@ -1,8 +1,8 @@
 // src/pages/ReRentPage.jsx
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import Header from '../components/Header';      // ✅ 추가
-import UserMenu from '../components/UserMenu';  // ✅ 추가
+import Header from '../components/Header';
+import UserMenu from '../components/UserMenu';
 
 const fakeBooks = [
   {
@@ -16,14 +16,14 @@ const fakeBooks = [
     id: '2',
     title: '핵심미적분학',
     author: '이자바',
-    image: '/images/핵심미적분학.jpg',
+    image: '/images/핵심미적분학.png',
     available: true,
   },
   {
     id: '3',
     title: '융합이산수학',
     author: '이자바',
-    image: '/images/융합 이산수학.jpg',
+    image: '/images/이산수학.png',
     available: true,
   },
   {
@@ -55,15 +55,17 @@ function ReRentPage() {
       return;
     }
 
-    alert('✅ 대여 신청이 완료되었습니다.');
-    console.log('대여 요청:', {
-      bookId: book.id,
-      title: book.title,
-      duration,
-      pickupPlace,
-    });
+    const days = parseInt(duration.replace('일', ''), 10);
+    const price = days * 5000;
 
-    navigate('/orders');
+    navigate('/PaymentPage/rerent', {
+      state: {
+        type: 'rerent',
+        title: book.title,
+        days,
+        price,
+      },
+    });
   };
 
   if (loading) return <div style={{ padding: '40px' }}>🔄 책 정보를 불러오는 중...</div>;
@@ -72,7 +74,7 @@ function ReRentPage() {
   return (
     <div style={{ fontFamily: 'sans-serif', backgroundColor: '#fff', minHeight: '100vh' }}>
       <Header />
-      <UserMenu isLoggedIn={true} setIsLoggedIn={() => {}} /> {/* ✅ 연결 */}
+      <UserMenu isLoggedIn={true} setIsLoggedIn={() => {}} />
 
       <div
         style={{
@@ -82,7 +84,7 @@ function ReRentPage() {
           backgroundColor: '#f8f9fa',
           border: '1px solid #ddd',
           borderRadius: '10px',
-          transform: 'translateX(-4px)', // 선택적으로 위치 조정
+          transform: 'translateX(-4px)',
           transition: 'all 0.3s ease',
         }}
       >
@@ -115,21 +117,20 @@ function ReRentPage() {
         <div style={{ marginTop: '20px' }}>
           <label>📍 수령 장소</label>
           <input
-  type="text"
-  value={pickupPlace}
-  onChange={(e) => setPickupPlace(e.target.value)}
-  style={{
-    width: '100%',
-    padding: '8px',
-    marginTop: '5px',
-    height: '38px',           // ✅ select와 동일한 높이 설정
-    fontSize: '16px',         // ✅ 글꼴 크기 일치
-    borderRadius: '4px',      // ✅ 경계선 둥글기 일치 (브라우저 기본값)
-    border: '1px solid #ccc', // ✅ 테두리 스타일 일치
-    boxSizing: 'border-box'   // ✅ 패딩 포함해서 크기 계산
-  }}
-/>
-
+            type="text"
+            value={pickupPlace}
+            onChange={(e) => setPickupPlace(e.target.value)}
+            style={{
+              width: '100%',
+              padding: '8px',
+              marginTop: '5px',
+              height: '38px',
+              fontSize: '16px',
+              borderRadius: '4px',
+              border: '1px solid #ccc',
+              boxSizing: 'border-box'
+            }}
+          />
         </div>
 
         <button

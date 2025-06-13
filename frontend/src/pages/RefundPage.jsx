@@ -1,12 +1,15 @@
 import React, { useState } from 'react';
 import Header from '../components/Header';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 export default function RefundPage() {
   const [selectedReason, setSelectedReason] = useState('');
   const [etcReason, setEtcReason] = useState('');
   const [submitted, setSubmitted] = useState(false);
+
   const navigate = useNavigate();
+  const location = useLocation(); // ✅ 위치 정보 받아오기
+  const returnTo = location.state?.from || '/orders'; // ✅ 돌아갈 경로 설정
 
   const handleSelect = (reason) => {
     setSelectedReason(reason);
@@ -23,26 +26,25 @@ export default function RefundPage() {
   };
 
   const handleCancel = () => {
-    navigate('/orders');
+    navigate(returnTo); // ✅ 원래 페이지 또는 기본값으로 이동
   };
 
   return (
     <div style={{ fontFamily: 'sans-serif', backgroundColor: '#f2f4f8', minHeight: '100vh' }}>
       <Header />
-     <div
-  style={{
-    width: '90%',                   // 반응형 폭
-    maxWidth: '910px',              // 최대 폭 제한
-    margin: '40px auto',            // 가운데 정렬
-    transform: 'translateX(-5px)',  // 살짝 왼쪽 이동
-    transition: 'all 0.3s ease',    // 부드러운 애니메이션
-    background: '#fff',
-    borderRadius: '16px',
-    boxShadow: '0 4px 16px rgba(0,0,0,0.1)',
-    padding: '40px'
-  }}
->
-
+      <div
+        style={{
+          width: '90%',
+          maxWidth: '910px',
+          margin: '40px auto',
+          transform: 'translateX(-5px)',
+          transition: 'all 0.3s ease',
+          background: '#fff',
+          borderRadius: '16px',
+          boxShadow: '0 4px 16px rgba(0,0,0,0.1)',
+          padding: '40px'
+        }}
+      >
         <h1 style={{ fontSize: '28px', fontWeight: 'bold', marginBottom: '30px', color: '#222' }}>📦 취소 요청</h1>
 
         {submitted ? (
@@ -66,7 +68,7 @@ export default function RefundPage() {
                   transition: 'all 0.2s',
                 }}
               >
-                주문 목록으로 돌아가기
+                돌아가기
               </button>
             </div>
           </div>

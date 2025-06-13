@@ -99,7 +99,7 @@ export default function SupportPage({ isLoggedIn, setIsLoggedIn }) {
           ))}
         </div>
 
-        <div style={{ display: 'flex', justifyContent: 'space-around', marginTop: '60px' }}>
+        <div style={{ display: 'flex', justifyContent: 'space-around', marginTop: '00px' }}>
           <div
             onClick={handleInquiryClick}
             style={{

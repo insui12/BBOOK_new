@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 import NaverPayImg from "../assets/naverpay.png";
 import SamsungPayImg from "../assets/samsungpay.png";
 
@@ -7,6 +8,18 @@ export default function PaymentPage() {
   const unitPrice = 5000;
   const totalPrice = rentCount * unitPrice;
 
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  // ✅ 연장 결제인지 확인
+  const isExtend = location.state?.type === "extend";
+  const isReRent = location.state?.type === "rerent";
+  const extendTitle = location.state?.title || "";
+  const extendDays = location.state?.days || 0;
+  const extendPrice = location.state?.price || 0;
+
+  const finalPrice = isExtend ? extendPrice : totalPrice;
+
   const [paymentMethod, setPaymentMethod] = useState("bank");
   const [tradeLocation, setTradeLocation] = useState("");
 
@@ -14,25 +27,45 @@ export default function PaymentPage() {
     <div style={styles.page}>
       {/* 상단 단계 표시 */}
       <div style={styles.stepBar}>
-        <span style={{ color: "#3478f6", fontWeight: "bold" }}>장바구니</span>
+        <span style={{ color: "#333", fontWeight: "bold" }}>장바구니</span>
         <span> &gt; </span>
-        <span style={{ color: "#333", fontWeight: "bold" }}>주문/결제</span>
+        <span style={{ color: "#3478f6", fontWeight: "bold" }}>주문/결제</span>
         <span> &gt; </span>
-        <span style={{ fontWeight: "bold" }}>주문완료</span>
+        <span style={{ color: "#333", fontWeight: "bold" }}>주문완료</span>
       </div>
 
-      <h1 style={{ fontSize: "28px", fontWeight: 800, marginBottom: "24px" }}>＜ 결제</h1>
+      {/* 결제 헤더 */}
+      <h1
+        onClick={() => navigate(-1)}
+        style={{
+          fontSize: "28px",
+          fontWeight: 800,
+          marginBottom: "24px",
+          cursor: "pointer",
+          display: "inline-block",
+          color: "#3B5FFF",
+          transition: "color 0.2s"
+        }}
+        onMouseOver={(e) => (e.target.style.color = "#2f51e0")}
+        onMouseOut={(e) => (e.target.style.color = "#3B5FFF")}
+      >
+        ＜ 결제
+      </h1>
 
       <div style={styles.container}>
         {/* 왼쪽 영역 */}
         <div style={styles.leftBox}>
           <div style={styles.groupBox}>
-            {/* 교재명 */}
             <div style={styles.sectionBox}>
-              <div style={styles.sectionTitle}>교재</div>
+              <div style={styles.sectionTitle}>{isExtend ? "연장 도서" : "교재"}</div>
               <div style={styles.textRow}>
-                총 대여 교재 : <strong>{rentCount}권</strong>{" "}
-                <a href="#" style={styles.link}></a>
+                {isExtend ? (
+                  <>
+                    <strong>{extendTitle}</strong> 도서를 <strong>{extendDays}일</strong> 연장합니다.
+                  </>
+                ) : (
+                  <>총 대여 교재 : <strong>{rentCount}권</strong></>
+                )}
               </div>
             </div>
 
@@ -85,9 +118,7 @@ export default function PaymentPage() {
                   checked={tradeLocation === "box"}
                   onChange={() => setTradeLocation("box")}
                 />
-                <span style={{ marginLeft: "6px" }}>
-                  보관함 거래 <a href="#" style={styles.link}></a>
-                </span>
+                <span style={{ marginLeft: "6px" }}>보관함 거래</span>
               </label>
               <label style={styles.radioRow}>
                 <input
@@ -96,9 +127,7 @@ export default function PaymentPage() {
                   checked={tradeLocation === "direct"}
                   onChange={() => setTradeLocation("direct")}
                 />
-                <span style={{ marginLeft: "6px" }}>
-                  직거래 <a href="#" style={styles.link}></a>
-                </span>
+                <span style={{ marginLeft: "6px" }}>직거래</span>
               </label>
             </div>
           </div>
@@ -109,8 +138,8 @@ export default function PaymentPage() {
           <h3 style={styles.paymentTitle}>결제 예정 금액</h3>
 
           <div style={styles.row}>
-            <span>대여료</span>
-            <span>{totalPrice.toLocaleString()}원</span>
+            <span>{isExtend ? "연장료" : "대여료"}</span>
+            <span>{finalPrice.toLocaleString()}원</span>
           </div>
           <div style={styles.row}>
             <span>배송비</span>
@@ -125,11 +154,12 @@ export default function PaymentPage() {
 
           <div style={styles.row}>
             <strong>총 결제 금액</strong>
-            <strong>{totalPrice.toLocaleString()}원</strong>
+            <strong>{finalPrice.toLocaleString()}원</strong>
           </div>
 
           <button
             style={styles.payButton}
+            onClick={() => navigate("/payment-complete")}
             onMouseOver={(e) => (e.target.style.backgroundColor = "#2f51e0")}
             onMouseOut={(e) => (e.target.style.backgroundColor = "#3B5FFF")}
           >
@@ -145,7 +175,7 @@ const styles = {
   page: {
     maxWidth: "1100px",
     margin: "0 auto",
-    padding: "40px 20px 0", // 하단 여백 줄임
+    padding: "40px 20px 0",
     fontFamily: "'Pretendard', sans-serif"
   },
   stepBar: {
@@ -160,7 +190,7 @@ const styles = {
     display: "flex",
     justifyContent: "space-between",
     gap: "40px",
-    marginBottom: "0" // 여백 제거
+    marginBottom: "0"
   },
   leftBox: {
     flex: 2
@@ -193,30 +223,22 @@ const styles = {
     display: "block",
     marginBottom: "10px"
   },
-  link: {
-    color: "#3478f6",
-    fontWeight: "bold",
-    textDecoration: "none",
-    marginLeft: "8px"
-  },
   icon: {
     width: "24px",
     height: "24px",
     marginLeft: "6px",
     objectFit: "contain"
   },
-rightBox: {
-  width: "260px",
-  padding: "20px",
-  border: "1px solid #ddd",
-  borderRadius: "12px",
-  backgroundColor: "#fff",
-  boxShadow: "0 4px 12px rgba(0, 0, 0, 0.05)",
-  height: "fit-content",              // ✅ 핵심
-  display: "inline-block",            // ✅ 필요 시 함께 사용
-  paddingBottom: "12px",              // 여백 최소화
-  marginBottom: "0"                   // 불필요한 마진 제거
-},
+  rightBox: {
+    width: "260px",
+    padding: "20px",
+    border: "1px solid #ddd",
+    borderRadius: "12px",
+    backgroundColor: "#fff",
+    boxShadow: "0 4px 12px rgba(0, 0, 0, 0.05)",
+    height: "fit-content",
+    paddingBottom: "12px"
+  },
   paymentTitle: {
     textAlign: "center",
     fontSize: "16px",
@@ -232,7 +254,6 @@ rightBox: {
   },
   payButton: {
     marginTop: "20px",
-    marginBottom: "0",
     width: "100%",
     padding: "12px",
     fontSize: "15px",

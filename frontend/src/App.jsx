@@ -12,6 +12,7 @@ import OrderHistoryPage from './pages/OrderHistoryPage';
 import CartPage from './pages/CartPage';
 import PaymentPage from './pages/PaymentPage';
 import SearchResultPage from './pages/SearchResultPage';
+import PaymentCompletePage from "./pages/PaymentCompletePage";
 import SearchResultPage2 from './pages/SearchResultPage2';
 import SearchResultPage3 from './pages/SearchResultPage3';
 import ReceiveCheckPage from './pages/ReceiveCheckPage';
@@ -34,6 +35,7 @@ function App() {
         <Route path="/join" element={<SignupPage />} />
         <Route path="/orders" element={<OrderHistoryPage isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />} />
         <Route path="/refund" element={<RefundPage isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />} />
+         <Route path="/payment-complete" element={<PaymentCompletePage />} /> 
         <Route path="/book/:id" element={<BookDetailPage isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />} />
         <Route path="/support" element={<SupportPage isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />} />
         <Route path="/book-detail/:id" element={<BookDetailPage isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />} />
@@ -42,6 +44,7 @@ function App() {
         <Route path="/inquiry" element={<InquiryPage isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />} />
         <Route path="/re-rent/:id" element={<ReRentPage isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />} />
         <Route path="/extend-rent/:id" element={<ExtendRentPage isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />} />
+        <Route path="/book/:id" element={<BookDetailPage />} />
         <Route path="/search/안재근" element={<SearchResultPage isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />} />
         <Route path="/search/김숙연" element={<SearchResultPage2 isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />} />
         <Route path="/search/양근석" element={<SearchResultPage3 isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />} />
