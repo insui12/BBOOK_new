@@ -112,7 +112,18 @@ export default function SearchResultsPage({ isLoggedIn, setIsLoggedIn }) {
                 padding: '16px 0',
               }}
             >
-              <div style={{ display: 'flex', gap: '16px' }}>
+              <div
+                style={{
+                  display: 'flex',
+                  gap: '16px',
+                  cursor: book.title.includes('핵심 미분적분학') ? 'pointer' : 'default',
+                }}
+                onClick={() => {
+                  if (book.title.includes('핵심 미분적분학')) {
+                    navigate('/book-detail/1');
+                  }
+                }}
+              >
                 <img
                   src={book.image}
                   alt={book.title}

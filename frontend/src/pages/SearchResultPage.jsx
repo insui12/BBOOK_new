@@ -155,8 +155,12 @@ export default function SearchResultsPage({ isLoggedIn, setIsLoggedIn }) {
               >
                 <button
                   onClick={() => {
-                    setMessage('장바구니에 담았습니다.');
-                    setTimeout(() => setMessage(''), 2000);
+                    if (!isLoggedIn) {
+                      navigate('/login');
+                    } else {
+                      setMessage('장바구니에 담았습니다.');
+                      setTimeout(() => setMessage(''), 2000);
+                    }
                   }}
                   style={buttonStyleBlue}
                 >
